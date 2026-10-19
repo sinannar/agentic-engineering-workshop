@@ -15,58 +15,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <h1>Agentic Engineering Workshop</h1>
     <p>
       Build <strong>SupportHub</strong>, a distributed customer support and ticket
-      management application, using .NET Aspire, GitHub Copilot CLI, and
-      Hypervelocity Engineering (HVE Core). The seven steps cover customer
-      management, tickets, file attachments, activity and audit, SLA management,
-      a support dashboard, and a final web and operations-console redesign.
+      management application, using .NET 10, Aspire, GitHub Copilot CLI, HVE Core,
+      RPI workflows, and stacked pull requests.
     </p>
     <p>
-      The application uses C# and ASP.NET Core APIs with a Blazor Interactive
-      Server frontend. PostgreSQL stores customer and ticket data, Blob Storage
-      holds attachments, Service Bus carries ticket events, Cosmos DB stores
-      activity records, and Redis supports caching. Aspire orchestrates the
-      services and local infrastructure and exposes health, logs, and traces.
-    </p>
-    <p>
-      Run each step's four prompts separately with <code>/rpi-research</code>,
-      <code>/rpi-plan</code>, <code>/rpi-implement</code>, and
-      <code>/rpi-review</code> in Copilot CLI. Inspect the research and approve the
-      plan before implementation. Use repository-local Aspire Skills to verify
-      the running application, not just the build. Review may lead to another
-      Research–Plan–Implement cycle and another review.
-    </p>
-    <p>
-      Begin with Step 0 to fork the prepared template, create and verify a
-      Codespace, and inspect the completed reference stack. Then work in your
-      SupportHub application fork. Each feature branch builds on the previous one. After
-      reviewing a feature, use the repository's <code>gh-stack</code> skill to
-      prepare its stacked PR; submit only after explicit approval.
-      each review, submit or update the next pull request only after explicit approval.
+      Follow the setup guide, then work through seven feature steps covering
+      customers, tickets, attachments, activity, SLAs, dashboards, and UI/UX.
+      Each step uses a Research–Plan–Implement–Review cycle.
     </p>
 
-    <section id="references" aria-labelledby="references-title">
-      <h2 id="references-title">References</h2>
-      <ul>
-        <li>
-          <a href="https://aspire.dev/">Aspire</a>
-          — tools for running and observing the application and its services.
-        </li>
-        <li>
-          <a href="https://github.com/microsoft/hve-core">Hypervelocity Engineering (HVE Core)</a>
-          — the skills and prompts used for the workshop workflow.
-        </li>
-        <li>
-          <a href="https://github.com/github/copilot-cli">GitHub Copilot CLI</a>
-          — the terminal-based coding agent used to run the prompts.
-        </li>
-        <li>
-          <a href="https://github.com/sinannar/agentic-engineering-experiment">SupportHub application repository</a>
-          — the completed reference implementation and its open stacked pull requests.
-        </li>
-      </ul>
-    </section>
-
-    <section id="lessons" aria-label="Start the workshop">
+    <section aria-label="Start the workshop">
       <a class="button" href={`${base}/lessons/${firstLesson.id}/`}>
         Start workshop
       </a>
@@ -101,20 +59,4 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-top: 2rem;
   }
 
-  h2 {
-    font-size: 1.3rem;
-  }
-
-  ul {
-    padding-left: 1.25rem;
-  }
-
-  li + li {
-    margin-top: 0.85rem;
-  }
-
-  li a {
-    color: var(--accent-strong);
-    text-underline-offset: 0.2em;
-  }
 </style>

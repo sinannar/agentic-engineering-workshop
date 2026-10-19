@@ -33,7 +33,7 @@ const { lessons, currentId } = Astro.props;
       >
         <span class="lesson-step-number">{String(lesson.data.order).padStart(2, '0')}</span>
         <span class="lesson-step-copy">
-          <strong>{lesson.data.workflow === 'setup' ? 'Step 0 · Setup' : lesson.data.feature}</strong>
+          <strong>{lesson.data.workflow === 'setup' ? 'Setup' : lesson.data.feature}</strong>
           {lesson.data.estimatedMinutes && <small>{lesson.data.estimatedMinutes} min</small>}
         </span>
       </a>

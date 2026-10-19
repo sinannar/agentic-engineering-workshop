@@ -1,0 +1,172 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout
+  title="References — Agentic Engineering Workshop"
+  description="Documentation, tools, and learning resources for the Agentic Engineering Workshop."
+>
+  <article class="container references-page">
+    <header>
+      <p class="eyebrow">Workshop resources</p>
+      <h1>Agentic Engineering Workshop — References</h1>
+      <p class="intro">
+        A curated collection of documentation, tools, and learning resources for
+        the Agentic Engineering Workshop.
+      </p>
+      <p class="intro">
+        The workshop focuses on building <strong>SupportHub</strong> using
+        <strong>.NET 10, Aspire, GitHub Copilot CLI, HVE Core, RPI workflows, and
+        stacked pull requests</strong>.
+      </p>
+    </header>
+
+    <section>
+      <h2>1. Development Environment</h2>
+      <ul>
+        <li><a href="https://docs.github.com/en/codespaces">GitHub Codespaces</a> — Cloud-based development environments.</li>
+        <li><a href="https://containers.dev/">Dev Containers</a> — Reproducible development environments.</li>
+        <li><a href="https://containers.dev/features">Dev Container Features</a> — Declarative tool installation.</li>
+        <li><a href="https://docs.docker.com/">Docker</a> — Containers, images, networking, and volumes.</li>
+        <li><a href="https://github.com/devcontainers/features/tree/main/src/docker-in-docker">Docker-in-Docker Feature</a> — Running Docker within Dev Containers.</li>
+        <li><a href="https://code.visualstudio.com/docs">Visual Studio Code</a> — Editor and development tooling.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. .NET 10 &amp; Aspire</h2>
+      <ul>
+        <li><a href="https://learn.microsoft.com/en-us/dotnet/">.NET Documentation</a> — SDK, CLI, and application development.</li>
+        <li><a href="https://learn.microsoft.com/en-us/aspnet/core/">ASP.NET Core</a> — Building web APIs and backend services.</li>
+        <li><a href="https://aspire.dev/docs/">Aspire Documentation</a> — Application orchestration and distributed development.</li>
+        <li><a href="https://aspire.dev/integrations/">Aspire Integrations</a> — PostgreSQL, Redis, Azure services, and more.</li>
+        <li><a href="https://github.com/dotnet/aspire-samples">Aspire Samples</a> — Reference implementations.</li>
+        <li><a href="https://learn.microsoft.com/en-us/aspnet/core/blazor/">Blazor</a> — Interactive web UI development.</li>
+      </ul>
+    </section>
+
+  <section>
+    <h2>3. GitHub Copilot CLI &amp; Agentic Development</h2>
+    <ul>
+      <li><a href="https://docs.github.com/en/copilot/how-tos/copilot-cli">GitHub Copilot CLI</a> — Agentic coding from the terminal.</li>
+      <li><a href="https://docs.github.com/en/copilot/reference/copilot-cli-reference">Copilot CLI Reference</a> — CLI commands and configuration.</li>
+      <li><a href="https://docs.github.com/en/copilot">GitHub Copilot Documentation</a> — AI-assisted software engineering.</li>
+      <li><a href="https://docs.github.com/en/copilot/how-tos/configure-custom-instructions">Custom Instructions</a> — Repository-specific agent guidance.</li>
+      <li><a href="https://agentskills.io/">Agent Skills</a> — Portable, reusable instructions for coding agents.</li>
+      <li><a href="https://modelcontextprotocol.io/">Model Context Protocol</a> — Connecting agents to tools and external systems.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>4. HVE Core &amp; RPI</h2>
+    <ul>
+      <li><a href="https://github.com/microsoft/hve-core">HVE Core</a> — Microsoft's open-source agentic engineering toolkit.</li>
+      <li><a href="https://microsoft.github.io/hve-core/">HVE Core Documentation</a> — Installation, workflows, and usage.</li>
+      <li><strong>Research (<code>/rpi-research</code>)</strong> — Investigate requirements, constraints, and existing code.</li>
+      <li><strong>Plan (<code>/rpi-plan</code>)</strong> — Develop an implementation approach with explicit tasks.</li>
+      <li><strong>Implement (<code>/rpi-implement</code>)</strong> — Execute the plan incrementally and validate changes.</li>
+      <li><strong>Review (<code>/rpi-review</code>)</strong> — Evaluate correctness, quality, and readiness.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>5. GitHub &amp; Stacked Pull Requests</h2>
+    <ul>
+      <li><a href="https://cli.github.com/manual/">GitHub CLI</a> — GitHub operations from the terminal.</li>
+      <li><a href="https://docs.github.com/en/pull-requests/how-tos/create-pull-requests/creating-stacked-pull-requests">Stacked Pull Requests</a> — Managing dependent pull requests.</li>
+      <li><a href="https://github.com/github/gh-stack">gh-stack</a> — GitHub's stacked PR CLI extension.</li>
+      <li><a href="https://docs.github.com/en/pull-requests">GitHub Pull Requests</a> — Reviews, collaboration, and merging.</li>
+      <li><a href="https://docs.github.com/en/actions">GitHub Actions</a> — CI/CD and automated validation.</li>
+      <li><a href="https://git-scm.com/doc">Git Documentation</a> — Branching, rebasing, and version control.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>6. SupportHub Architecture &amp; Infrastructure</h2>
+    <ul>
+      <li><a href="https://www.postgresql.org/docs/">PostgreSQL</a> — Relational persistence.</li>
+      <li><a href="https://redis.io/docs/latest/">Redis</a> — Caching and distributed state.</li>
+      <li><a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azurite">Azurite</a> — Local Azure Storage emulation.</li>
+      <li><a href="https://learn.microsoft.com/en-us/azure/service-bus-messaging/">Azure Service Bus</a> — Messaging and asynchronous workflows.</li>
+      <li><a href="https://learn.microsoft.com/en-us/azure/service-bus-messaging/overview-emulator">Azure Service Bus Emulator</a> — Local messaging development.</li>
+      <li><a href="https://learn.microsoft.com/en-us/azure/cosmos-db/">Azure Cosmos DB</a> — NoSQL data services.</li>
+      <li><a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/workers">Background Services in .NET</a> — Worker services and background processing.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>7. Testing, Quality &amp; Observability</h2>
+    <ul>
+      <li><a href="https://learn.microsoft.com/en-us/dotnet/core/testing/">.NET Testing</a> — Unit and integration testing.</li>
+      <li><a href="https://aspire.dev/testing/">Aspire Testing</a> — Testing distributed applications.</li>
+      <li><a href="https://opentelemetry.io/docs/">OpenTelemetry</a> — Traces, metrics, and logs.</li>
+      <li><a href="https://docs.github.com/en/code-security">GitHub Code Security</a> — Dependency and code security.</li>
+      <li><a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a> — Common application security risks.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>8. Further Learning</h2>
+    <ul>
+      <li><a href="https://docs.github.com/en/copilot/get-started/best-practices">GitHub Copilot Best Practices</a> — Effective AI-assisted development.</li>
+      <li><a href="https://learn.microsoft.com/en-us/agent-framework/">Microsoft Agent Framework</a> — Building AI agents.</li>
+      <li><a href="https://learn.microsoft.com/en-us/training/">Microsoft Learn</a> — Additional hands-on learning paths.</li>
+    </ul>
+  </section>
+  </article>
+</SiteLayout>
+
+<style>
+  .references-page {
+    max-width: 860px;
+    padding-block: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  header {
+    margin-bottom: 3rem;
+  }
+
+  h1 {
+    max-width: 760px;
+    margin: 0 0 1.25rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+  }
+
+  .intro {
+    max-width: 720px;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+  }
+
+  section {
+    margin-top: 2.75rem;
+  }
+
+  h2 {
+    margin-bottom: 0.9rem;
+    font-size: 1.35rem;
+  }
+
+  ul {
+    padding-left: 1.25rem;
+  }
+
+  li {
+    color: var(--ink-soft);
+  }
+
+  li + li {
+    margin-top: 0.65rem;
+  }
+
+  li a {
+    color: var(--accent-strong);
+    text-underline-offset: 0.2em;
+  }
+
+  strong {
+    color: var(--ink);
+  }
+</style>
