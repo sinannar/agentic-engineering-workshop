@@ -60,7 +60,7 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
   <section aria-labelledby="verify-environment">
     <h2 id="verify-environment">Verify the environment</h2>
     <p>In the Codespace terminal, run each command and confirm it returns version information:</p>
-    <pre><code>aspire --version
+    <pre><code class="language-bash">aspire --version
 dotnet --version
 dotnet --list-sdks
 gh --version
@@ -84,7 +84,7 @@ gh stack --version</code></pre>
   <section aria-labelledby="start-application">
     <h2 id="start-application">Start the application</h2>
     <p>From the repository root in the Codespace terminal, start the Aspire application:</p>
-    <pre><code>aspire start</code></pre>
+    <pre><code class="language-bash">aspire start</code></pre>
     <p>
       Aspire prints a Dashboard login URL containing a secret in its
       <code>t</code> query parameter. Copy that secret locally. It is required if
@@ -105,7 +105,7 @@ gh stack --version</code></pre>
     <p>
       Wait for the distributed resources to start, then run:
     </p>
-    <pre><code>aspire describe</code></pre>
+    <pre><code class="language-bash">aspire describe</code></pre>
     <p>
       Continue when the required application services and infrastructure resources
       report <strong>Running</strong> and <strong>Healthy</strong>. The interactive

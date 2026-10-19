@@ -105,7 +105,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   const markLessonButton = document.querySelector('[data-mark-lesson-complete]');
   const resetButton = document.querySelector('[data-workflow-controls] [data-reset-progress]');
 
-  document.querySelectorAll<HTMLPreElement>('.lesson-content pre').forEach((pre) => {
+  document.querySelectorAll<HTMLPreElement>('.lesson-article pre').forEach((pre) => {
     const code = pre.querySelector('code');
     if (!code) return;
 

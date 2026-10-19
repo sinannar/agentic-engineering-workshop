@@ -980,7 +980,7 @@ a:focus-visible {
   margin-top: 0;
 }
 
-.lesson-content pre {
+.lesson-article pre {
   position: relative;
   overflow-x: auto;
   margin: 1.25rem 0 2.5rem;
@@ -1012,18 +1012,18 @@ a:focus-visible {
   color: var(--accent-strong);
 }
 
-.lesson-content pre:has(.prompt-copy) {
+.lesson-article pre:has(.prompt-copy) {
   padding-top: 3.5rem;
 }
 
-.lesson-content pre.terminal-code {
+.lesson-article pre.terminal-code {
   border-left-color: var(--lime);
-  background: var(--ink);
-  color: var(--canvas);
-  box-shadow: 0 0.8rem 1.8rem color-mix(in srgb, var(--ink) 16%, transparent);
+  background: #11161c;
+  color: #eef3f7;
+  box-shadow: 0 0.8rem 1.8rem rgb(17 22 28 / 16%);
 }
 
-.lesson-content pre.terminal-code::before {
+.lesson-article pre.terminal-code::before {
   position: absolute;
   top: 0.85rem;
   left: 1.25rem;
@@ -1034,14 +1034,14 @@ a:focus-visible {
   text-transform: uppercase;
 }
 
-.lesson-content pre.terminal-code code {
+.lesson-article pre.terminal-code code {
   color: inherit;
 }
 
 .terminal-copy {
-  border-color: color-mix(in srgb, var(--canvas) 30%, transparent);
-  background: color-mix(in srgb, var(--ink) 82%, var(--canvas));
-  color: var(--canvas);
+  border-color: rgb(238 243 247 / 30%);
+  background: #1d2732;
+  color: #eef3f7;
 }
 
 .terminal-copy:hover {
@@ -1130,7 +1130,7 @@ a:focus-visible {
   padding-left: 0.2rem;
 }
 
-.lesson-content pre code {
+.lesson-article pre code {
   font: inherit;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
