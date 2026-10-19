@@ -7,12 +7,12 @@ const progressStorageKey = 'agentic-workshop-progress';
     <p class="eyebrow">Your workspace</p>
     <h2 id="progress-title">Keep the thread.</h2>
     <p class="progress-copy">
-      Your completed lessons are saved in this browser so you can keep the thread between sessions.
+      Your completed chapters are saved in this browser so you can keep the thread between sessions.
     </p>
   </div>
-  <div class="progress-meter" aria-label="Workshop progress: 0 of 7 lessons complete" data-progress-meter>
+  <div class="progress-meter" aria-label="Workshop progress: 0 of 7 chapters complete" data-progress-meter>
     <div class="progress-meter-label">
-      <span><strong data-progress-complete>0</strong> of 7 lessons complete</span>
+      <span><strong data-progress-complete>0</strong> of 7 chapters complete</span>
       <span class="mono" data-progress-percent>0%</span>
     </div>
     <div class="progress-track"><span data-progress-bar style="width: 0%"></span></div>
@@ -38,7 +38,7 @@ const progressStorageKey = 'agentic-workshop-progress';
     summary?.querySelector('[data-progress-bar]')?.setAttribute('style', `width: ${percent}%`);
     summary?.querySelector('[data-progress-meter]')?.setAttribute(
       'aria-label',
-      `Workshop progress: ${completed.size} of 7 lessons complete`,
+      `Workshop progress: ${completed.size} of 7 chapters complete`,
     );
     if (resetButton instanceof HTMLButtonElement) {
       resetButton.hidden = completed.size === 0
@@ -46,7 +46,7 @@ const progressStorageKey = 'agentic-workshop-progress';
         && progress.primaryPhase === 'research';
     }
     summary?.querySelector('[data-progress-note]')?.replaceChildren(
-      completed.size ? 'Progress is saved locally in this browser.' : 'Start a lesson to begin saving progress.',
+      completed.size ? 'Progress is saved locally in this browser.' : 'Start a chapter to begin saving progress.',
     );
   };
 

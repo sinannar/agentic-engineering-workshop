@@ -18,7 +18,7 @@ interface Props {
 const { lessons, currentId } = Astro.props;
 ---
 
-<aside class="lesson-sidebar" aria-label="Workshop lessons">
+<aside class="lesson-sidebar" aria-label="Workshop chapters">
   <div class="lesson-sidebar-heading">
     <p class="eyebrow">Workshop path</p>
     <span class="mono">{lessons.length - 1} feature steps</span>
@@ -27,7 +27,7 @@ const { lessons, currentId } = Astro.props;
     {lessons.map((lesson) => (
       <a
         class:list={{ 'lesson-step': true, 'is-current': lesson.id === currentId }}
-        href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/lessons/${lesson.id}/`}
+        href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/chapters/${lesson.id}/`}
         aria-current={lesson.id === currentId ? 'page' : undefined}
         data-lesson-step={lesson.id}
       >

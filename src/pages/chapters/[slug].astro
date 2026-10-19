@@ -63,7 +63,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
       {lesson.data.workflow === 'rpi' && (
         <div class="workflow-controls" data-workflow-controls hidden>
-          <button class="button secondary" type="button" data-mark-lesson-complete>Mark lesson complete</button>
+          <button class="button secondary" type="button" data-mark-lesson-complete>Mark chapter complete</button>
           <button class="button secondary" type="button" data-reset-progress>Reset saved progress</button>
           <span class="workflow-status" data-workflow-status role="status" aria-live="polite"></span>
         </div>
@@ -76,7 +76,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
             <p class="next-step-message">Review triggered another cycle.</p>
           </div>
           {next ? (
-            <a class="button" href={`${base}/lessons/${next.id}/`}>Go to next chapter <span aria-hidden="true">↗</span></a>
+            <a class="button" href={`${base}/chapters/${next.id}/`}>Go to next chapter <span aria-hidden="true">↗</span></a>
           ) : (
             <span class="next-step-message">Workshop complete.</span>
           )}
@@ -155,7 +155,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         button.textContent = isComplete ? 'Completed' : 'Mark complete';
       });
       if (markLessonButton instanceof HTMLButtonElement) {
-        markLessonButton.textContent = complete ? 'Lesson complete' : 'Mark lesson complete';
+        markLessonButton.textContent = complete ? 'Chapter complete' : 'Mark chapter complete';
         markLessonButton.setAttribute('aria-pressed', String(complete));
       }
       if (followUp instanceof HTMLElement) followUp.hidden = !complete;

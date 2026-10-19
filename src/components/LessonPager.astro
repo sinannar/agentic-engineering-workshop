@@ -20,17 +20,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <nav class="lesson-pager" aria-label="Lesson navigation">
   {previous ? (
-    <a class="lesson-pager-link previous" href={`${base}/lessons/${previous.id}/`}>
+    <a class="lesson-pager-link previous" href={`${base}/chapters/${previous.id}/`}>
       <span class="mono">← Previous step</span>
       <strong>{previous.data.workflow === 'setup' ? 'Setup' : previous.data.feature}</strong>
     </a>
   ) : <span></span>}
   {next ? (
-    <a class="lesson-pager-link next" href={`${base}/lessons/${next.id}/`}>
+    <a class="lesson-pager-link next" href={`${base}/chapters/${next.id}/`}>
       <span class="mono">Next step →</span>
       <strong>{next.data.workflow === 'setup' ? 'Setup' : next.data.feature}</strong>
     </a>
-  ) : <a class="lesson-pager-link next" href={`${base}/#lessons`}>
+  ) : <a class="lesson-pager-link next" href={`${base}/#workshop`}>
     <span class="mono">Back to path →</span>
     <strong>Workshop overview</strong>
   </a>}

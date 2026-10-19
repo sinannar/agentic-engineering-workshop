@@ -178,4 +178,4 @@ After Review, inspect the diff, commit the approved changes, and use the applica
 
 This is the final workshop layer. Review the complete stack and record the verified customer, ticket, attachment, activity, SLA, dashboard, web, and console journeys, along with any remaining limitations.
 
-[Source prompts](https://github.com/sinannar/agentic-engineering-experiment/blob/main/notes/prompts/7-feature-ui-ux.md). These prompts describe intended behavior; verify the actual application state before claiming acceptance criteria are met.
+[Source prompts](https://github.com/sinannar/agentic-engineering-experiment/blob/devcontainer/notes/prompts/7-feature-ui-ux.md). These prompts describe intended behavior; verify the actual application state before claiming acceptance criteria are met.

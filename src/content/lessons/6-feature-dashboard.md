@@ -135,4 +135,4 @@ After Review, inspect the diff, commit the approved changes, and use the applica
 
 Create the next layer, `feature/ui-ux`, on top of `feature/dashboard` before continuing to the next workshop step. Keep later features out of the current PR.
 
-[Source prompts](https://github.com/sinannar/agentic-engineering-experiment/blob/main/notes/prompts/6-feature-dashboard.md). These prompts describe intended behavior; verify the actual application state before claiming acceptance criteria are met.
+[Source prompts](https://github.com/sinannar/agentic-engineering-experiment/blob/devcontainer/notes/prompts/6-feature-dashboard.md). These prompts describe intended behavior; verify the actual application state before claiming acceptance criteria are met.

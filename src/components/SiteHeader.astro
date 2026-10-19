@@ -5,7 +5,7 @@ import ThemePicker from './ThemePicker.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const firstLesson = (await getCollection('lessons')).sort((a, b) => a.data.order - b.data.order)[0];
 const homeUrl = `${base}/`;
-const startUrl = `${base}/lessons/${firstLesson.id}/`;
+const startUrl = `${base}/chapters/${firstLesson.id}/`;
 ---
 
 <header class="site-header">
