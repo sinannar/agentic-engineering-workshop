@@ -9,20 +9,38 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <SiteLayout
   title="Agentic Engineering Workshop"
-  description="Build a .NET application with Aspire, GitHub Copilot CLI, and HVE Core across seven hands-on steps."
+  description="Build SupportHub, a distributed customer support application, using Aspire, GitHub Copilot CLI, and HVE Core across seven feature steps."
 >
   <article class="container workshop-intro">
     <h1>Agentic Engineering Workshop</h1>
     <p>
-      This hands-on workshop uses .NET Aspire, GitHub Copilot CLI, and HVE Core
-      to build an application across seven steps: customers, tickets, attachments,
-      activity, SLA, dashboard, and UI/UX.
+      Build <strong>SupportHub</strong>, a distributed customer support and ticket
+      management application, using .NET Aspire, GitHub Copilot CLI, and
+      Hypervelocity Engineering (HVE Core). The seven steps cover customer
+      management, tickets, file attachments, activity and audit, SLA management,
+      a support dashboard, and a final web and operations-console redesign.
     </p>
     <p>
-      In each step, you run four prompts for <strong>Research, Plan, Implement,
-      and Review</strong>, using HVE Core skills in Copilot CLI. Review may lead
-      to another Research–Plan–Implement cycle before you move on. Between steps,
-      you use stacked pull requests to keep the changes reviewable.
+      The application uses C# and ASP.NET Core APIs with a Blazor Interactive
+      Server frontend. PostgreSQL stores customer and ticket data, Blob Storage
+      holds attachments, Service Bus carries ticket events, Cosmos DB stores
+      activity records, and Redis supports caching. Aspire orchestrates the
+      services and local infrastructure and exposes health, logs, and traces.
+    </p>
+    <p>
+      Run each step's four prompts separately with <code>/rpi-research</code>,
+      <code>/rpi-plan</code>, <code>/rpi-implement</code>, and
+      <code>/rpi-review</code> in Copilot CLI. Inspect the research and approve the
+      plan before implementation. Use repository-local Aspire Skills to verify
+      the running application, not just the build. Review may lead to another
+      Research–Plan–Implement cycle and another review.
+    </p>
+    <p>
+      Work in the SupportHub application repository, starting from its prepared
+      Aspire baseline. Each feature branch builds on the previous one. After
+      reviewing a feature, use the repository's <code>gh-stack</code> skill to
+      prepare its stacked PR; submit only after explicit approval.
+      The first lesson includes the baseline checks.
     </p>
 
     <section id="references" aria-labelledby="references-title">
@@ -39,6 +57,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <li>
           <a href="https://github.com/github/copilot-cli">GitHub Copilot CLI</a>
           — the terminal-based coding agent used to run the prompts.
+        </li>
+        <li>
+          <a href="https://github.com/sinannar/agentic-engineering-experiment">SupportHub application repository</a>
+          — the application, setup notes, and original workshop prompts.
         </li>
       </ul>
     </section>

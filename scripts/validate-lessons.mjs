@@ -52,7 +52,7 @@ for (const filename of expectedLessons) {
   const metadata = parseFrontmatter(source, filename);
   const expectedOrder = Number(filename.match(/^(\d+)/)?.[1]);
 
-  for (const field of ['order', 'title', 'summary', 'feature', 'estimatedMinutes', 'status']) {
+  for (const field of ['order', 'title', 'summary', 'feature', 'status']) {
     if (metadata[field] === undefined || metadata[field] === '') {
       errors.push(`${filename}: missing required frontmatter field "${field}"`);
     }
@@ -61,8 +61,8 @@ for (const filename of expectedLessons) {
   if (metadata.order !== expectedOrder) {
     errors.push(`${filename}: order must be ${expectedOrder}`);
   }
-  if (!Number.isInteger(metadata.estimatedMinutes) || metadata.estimatedMinutes <= 0) {
-    errors.push(`${filename}: estimatedMinutes must be a positive integer`);
+  if (metadata.estimatedMinutes !== undefined && (!Number.isInteger(metadata.estimatedMinutes) || metadata.estimatedMinutes <= 0)) {
+    errors.push(`${filename}: estimatedMinutes must be a positive integer when supplied`);
   }
   if (!['fixture', 'draft', 'ready'].includes(metadata.status)) {
     errors.push(`${filename}: status must be fixture, draft, or ready`);

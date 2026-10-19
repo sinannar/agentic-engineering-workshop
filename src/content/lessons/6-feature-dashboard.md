@@ -1,42 +1,138 @@
 ---
 order: 6
-title: Feature dashboard
-summary: Bring trustworthy operational signals together without hiding their sources.
-feature: Dashboard
-estimatedMinutes: 50
-status: fixture
+title: "Support Dashboard and Operational Polish"
+summary: "Add support metrics, justified Redis caching, resilience, and end-to-end verification of the distributed application."
+feature: "Dashboard"
+status: ready
 ---
 
-<!-- DEVELOPMENT FIXTURE: replace this lesson with final workshop content. -->
+**Branch:** `feature/dashboard`
+
+**PR target:** `feature/sla`
+
+**Usage:** Invoke each skill separately in GitHub Copilot CLI. Review each stage's output before proceeding.
+
+## What you will build
+
+- Dashboard metrics: open tickets, status/priority breakdown, at-risk and breached SLAs.
+- Redis caching for justified read-heavy operations with TTL and invalidation rules.
+- Improve resilience, health checks, structured logs and distributed OpenTelemetry traces.
+- Validate full customer-to-ticket-to-attachment-to-audit-to-SLA journeys.
+- Aspire integration tests and browser-level UI verification where practical.
+- Document operational startup, known limitations and verification evidence.
+
+## Acceptance criteria
+
+- Dashboard figures reflect authoritative data.
+- Cache invalidation prevents materially stale critical results.
+- Distributed resources, end-to-end workflows and tests pass.
 
 ## Research
 
-Bring the accumulated feature signals together by inventorying source metrics, query paths, refresh behavior, and existing component patterns.
+Invoke `/rpi-research` in GitHub Copilot CLI with the prompt below.
+Inspect the research output before moving on. This phase must not change application code.
 
 ```prompt
-Use HVE Core Research to inspect the data sources and UI conventions needed for a dashboard. Identify query cost, freshness, empty/error states, permissions, and existing tests. Cite the relevant code.
+Research the implementation of **SupportHub Support Dashboard and Operational Polish** for the stacked PR `feature/dashboard` (parent `feature/sla`).
+
+Feature: **Support Dashboard and Operational Polish**. Current branch: `feature/dashboard`; PR parent: `feature/sla`.
+
+Read `.github/copilot-instructions.md` and relevant existing code before making decisions. Respect service data ownership and use repository-local Aspire Skills for version-specific infrastructure, service discovery and runtime diagnostics. Keep work limited to this feature and do not implement later stack layers.
+
+Feature requirements:
+- Dashboard metrics: open tickets, status/priority breakdown, at-risk and breached SLAs.
+- Redis caching for justified read-heavy operations with TTL and invalidation rules.
+- Improve resilience, health checks, structured logs and distributed OpenTelemetry traces.
+- Validate full customer-to-ticket-to-attachment-to-audit-to-SLA journeys.
+- Aspire integration tests and browser-level UI verification where practical.
+- Document operational startup, known limitations and verification evidence.
+
+Inspect affected projects, current Aspire AppHost references, client integrations, existing tests and relevant domain contracts. Identify recommended design, APIs, data model/storage, frontend changes, edge cases, dependencies, implementation risks and test strategy. Capture clear acceptance criteria.
+
+Research only. Do not modify application code, implement features, or create pull requests.
 ```
 
 ## Plan
 
-Use HVE Core Plan to start with a small set of decisions that help users act, rather than a large collection of counters.
+Invoke `/rpi-plan` in GitHub Copilot CLI with the prompt below.
+Review and approve the plan before implementation. Revise it if the scope or acceptance criteria are incomplete.
 
 ```prompt
-Plan a focused dashboard slice with three or fewer decision-support signals. Define source queries, loading/error/empty states, refresh semantics, accessibility, and acceptance tests.
+Create a concrete, testable implementation plan for **SupportHub Support Dashboard and Operational Polish** using the completed research artifacts.
+
+Feature: **Support Dashboard and Operational Polish**. Current branch: `feature/dashboard`; PR parent: `feature/sla`.
+
+Read `.github/copilot-instructions.md` and relevant existing code before making decisions. Respect service data ownership and use repository-local Aspire Skills for version-specific infrastructure, service discovery and runtime diagnostics. Keep work limited to this feature and do not implement later stack layers.
+
+Planned scope:
+- Dashboard metrics: open tickets, status/priority breakdown, at-risk and breached SLAs.
+- Redis caching for justified read-heavy operations with TTL and invalidation rules.
+- Improve resilience, health checks, structured logs and distributed OpenTelemetry traces.
+- Validate full customer-to-ticket-to-attachment-to-audit-to-SLA journeys.
+- Aspire integration tests and browser-level UI verification where practical.
+- Document operational startup, known limitations and verification evidence.
+
+Break work into small ordered steps. Identify affected files/projects, contracts, infrastructure client registration, tests, Aspire runtime verification, failure cases, and migration or compatibility considerations where applicable.
+
+Acceptance criteria:
+- Dashboard figures reflect authoritative data.
+- Cache invalidation prevents materially stale critical results.
+- Distributed resources, end-to-end workflows and tests pass.
+
+Plan only. Do not change application code or create a pull request. Present the plan for approval before implementation.
 ```
 
 ## Implement
 
-Make each displayed signal traceable to a source and resilient to partial failure, as agreed in the HVE Core plan.
+Invoke `/rpi-implement` in GitHub Copilot CLI with the prompt below.
+Use the approved plan, inspect the changes, and check the reported tests and Aspire runtime evidence.
 
 ```prompt
-Implement the approved dashboard slice. Reuse existing data-access and presentation patterns, isolate partial failures, and add tests for data mapping and states.
+Implement the approved plan for **SupportHub Support Dashboard and Operational Polish** on `feature/dashboard`.
+
+Feature: **Support Dashboard and Operational Polish**. Current branch: `feature/dashboard`; PR parent: `feature/sla`.
+
+Read `.github/copilot-instructions.md` and relevant existing code before making decisions. Respect service data ownership and use repository-local Aspire Skills for version-specific infrastructure, service discovery and runtime diagnostics. Keep work limited to this feature and do not implement later stack layers.
+
+Required scope:
+- Dashboard metrics: open tickets, status/priority breakdown, at-risk and breached SLAs.
+- Redis caching for justified read-heavy operations with TTL and invalidation rules.
+- Improve resilience, health checks, structured logs and distributed OpenTelemetry traces.
+- Validate full customer-to-ticket-to-attachment-to-audit-to-SLA journeys.
+- Aspire integration tests and browser-level UI verification where practical.
+- Document operational startup, known limitations and verification evidence.
+
+Follow the approved research and plan, implement incrementally, and add meaningful automated tests. Use Aspire Skills for service wiring, integration, health checks and runtime diagnosis. Run solution build, relevant tests and Aspire integration verification where available; fix failures within this feature's scope.
+
+Do not implement later features, rename unrelated projects, or submit a pull request. Report changes, tests run and any unverified acceptance criteria.
 ```
 
 ## Review
 
-Use HVE Core Review to assess whether the dashboard is accurate, useful, and honest about freshness.
+Invoke `/rpi-review` in GitHub Copilot CLI with the prompt below.
+Resolve important findings before preparing the PR. If needed, repeat Research, Plan, and Implement, then run Review again.
 
 ```prompt
-Review the dashboard diff for misleading aggregation, stale data, performance risks, authorization gaps, accessibility issues, and weak tests. Return evidence-backed findings.
+Review **SupportHub Support Dashboard and Operational Polish** on `feature/dashboard` against the approved research, plan and acceptance criteria.
+
+Feature: **Support Dashboard and Operational Polish**. Current branch: `feature/dashboard`; PR parent: `feature/sla`.
+
+Read `.github/copilot-instructions.md` and relevant existing code before making decisions. Respect service data ownership and use repository-local Aspire Skills for version-specific infrastructure, service discovery and runtime diagnostics. Keep work limited to this feature and do not implement later stack layers.
+
+Acceptance criteria:
+- Dashboard figures reflect authoritative data.
+- Cache invalidation prevents materially stale critical results.
+- Distributed resources, end-to-end workflows and tests pass.
+
+Inspect changes for correctness, service boundaries, validation, security, resilience, observability, and test quality. Run `dotnet build SupportHub.slnx`, relevant `dotnet test` commands, and Aspire runtime/integration checks where available. Examine health, logs and traces; report any checks that cannot be performed.
+
+Report findings ordered by severity, missing coverage, remaining risks, and whether the feature is ready for its stacked PR. Do not submit the PR.
 ```
+
+## Stacked PR handoff
+
+After Review, inspect the diff, commit the approved changes, and use the application repository's `gh-stack` skill to prepare `feature/dashboard` targeting `feature/sla`. Include build, test, and Aspire verification evidence, and state any checks you could not run. Submit or update the PR only after explicit approval.
+
+Create the next layer, `feature/ui-ux`, on top of `feature/dashboard` before continuing to the next workshop step. Keep later features out of the current PR.
+
+[Source prompts](https://github.com/sinannar/agentic-engineering-experiment/blob/main/notes/prompts/6-feature-dashboard.md). These prompts describe intended behavior; verify the actual application state before claiming acceptance criteria are met.

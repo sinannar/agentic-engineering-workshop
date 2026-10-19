@@ -65,10 +65,14 @@ order: 1
 title: Feature customers
 summary: One-sentence lesson summary.
 feature: Customers
-estimatedMinutes: 45
 status: draft # fixture, draft, or ready
 ---
 ```
+
+An optional `estimatedMinutes` field must be a positive integer when provided.
+The imported lessons omit duration estimates because the source notes do not
+specify per-step timings. `status: ready` identifies populated lesson content,
+not a claim that the application requirements have already been implemented.
 
 The `order` must match the filename. Lesson content must contain exactly these
 second-level headings, in order: `Research`, `Plan`, `Implement`, and `Review`.
@@ -85,5 +89,19 @@ Give the agent a bounded, actionable instruction.
 Run `npm run check` while authoring. It validates the Astro collection schema,
 the seven filenames and order rules, required phases, and prompt blocks with
 file-specific error messages. `npm run build` runs the same content validation
-before producing the static site. Files currently marked `status: fixture` are
-development fixtures and should be replaced with final instructional content.
+before producing the static site.
+
+## Workshop content source
+
+The seven lessons are adapted from
+[`agentic-engineering-experiment/notes/prompts`](https://github.com/sinannar/agentic-engineering-experiment/tree/main/notes/prompts).
+All 28 Research, Plan, Implement, and Review prompt bodies are preserved;
+headings and fences are adapted for this site's phase navigation and copy controls.
+The `0-feature(template).md` file is intentionally excluded.
+
+Setup context comes from the prompt index and surrounding `notes/` documents.
+The seven-file prompt index is the current sequence; older notes describe an
+earlier six-feature roadmap or starter-only baseline. Participants must verify
+the actual SupportHub checkout and prepared infrastructure before beginning.
+Application branch names and stacked-PR instructions apply to that repository,
+not to the workshop website.

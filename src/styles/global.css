@@ -1057,6 +1057,8 @@ a:focus-visible {
 
 .lesson-content pre code {
   font: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .lesson-pager {

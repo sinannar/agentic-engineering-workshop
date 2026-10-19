@@ -5,7 +5,7 @@ interface Props {
   title: string;
   summary: string;
   feature: string;
-  estimatedMinutes: number;
+  estimatedMinutes?: number;
   status: 'fixture' | 'draft' | 'ready';
 }
 
@@ -23,7 +23,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <h3>{title}</h3>
   <p>{summary}</p>
   <div class="landing-lesson-meta">
-    <span>{estimatedMinutes} min</span>
+    {estimatedMinutes && <span>{estimatedMinutes} min</span>}
     <span aria-hidden="true">↗</span>
   </div>
 </a>

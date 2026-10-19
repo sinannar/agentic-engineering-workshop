@@ -5,7 +5,7 @@ interface LessonSummary {
     order: number;
     title: string;
     feature: string;
-    estimatedMinutes: number;
+    estimatedMinutes?: number;
   };
 }
 
@@ -33,7 +33,7 @@ const { lessons, currentId } = Astro.props;
         <span class="lesson-step-number">{String(lesson.data.order).padStart(2, '0')}</span>
         <span class="lesson-step-copy">
           <strong>{lesson.data.feature}</strong>
-          <small>{lesson.data.estimatedMinutes} min</small>
+          {lesson.data.estimatedMinutes && <small>{lesson.data.estimatedMinutes} min</small>}
         </span>
       </a>
     ))}

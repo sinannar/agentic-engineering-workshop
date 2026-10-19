@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 const { lesson, previous, next } = Astro.props;
 const lessons = (await getCollection('lessons')).sort((a, b) => a.data.order - b.data.order);
 const { Content } = await render(lesson);
-const description = `${lesson.data.summary} A ${lesson.data.estimatedMinutes}-minute workshop lesson on ${lesson.data.feature}.`;
+const description = lesson.data.summary;
 ---
 
 <SiteLayout title={`${lesson.data.title} — Agentic Engineering Workshop`} description={description}>
@@ -42,8 +42,12 @@ const description = `${lesson.data.summary} A ${lesson.data.estimatedMinutes}-mi
         <p class="lesson-summary">{lesson.data.summary}</p>
         <div class="lesson-meta" aria-label="Lesson details">
           <span class="mono">{lesson.data.feature}</span>
-          <span aria-hidden="true">·</span>
-          <span>{lesson.data.estimatedMinutes} minutes</span>
+          {lesson.data.estimatedMinutes && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>{lesson.data.estimatedMinutes} minutes</span>
+            </>
+          )}
         </div>
       </header>
 

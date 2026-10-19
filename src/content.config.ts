@@ -8,7 +8,7 @@ const lessons = defineCollection({
     title: z.string().min(1),
     summary: z.string().min(1),
     feature: z.string().min(1),
-    estimatedMinutes: z.number().int().positive(),
+    estimatedMinutes: z.number().int().positive().optional(),
     status: z.enum(['fixture', 'draft', 'ready']).default('draft'),
   }),
 });
