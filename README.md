@@ -49,13 +49,14 @@ ASTRO_SITE_URL=https://sinannar.github.io ASTRO_BASE_PATH=/agentic-engineering-w
 Lessons live in `src/content/lessons/` and must use these exact filenames and
 orders:
 
-1. `1-feature-customers.md`
-2. `2-feature-tickets.md`
-3. `3-feature-attachments.md`
-4. `4-feature-activity.md`
-5. `5-feature-sla.md`
-6. `6-feature-dashboard.md`
-7. `7-feature-ui-ux.md`
+1. `0-workshop-setup.md`
+2. `1-feature-customers.md`
+3. `2-feature-tickets.md`
+4. `3-feature-attachments.md`
+5. `4-feature-activity.md`
+6. `5-feature-sla.md`
+7. `6-feature-dashboard.md`
+8. `7-feature-ui-ux.md`
 
 Every lesson requires this frontmatter:
 
@@ -66,6 +67,7 @@ title: Feature customers
 summary: One-sentence lesson summary.
 feature: Customers
 status: draft # fixture, draft, or ready
+workflow: rpi # rpi (default) or setup
 ---
 ```
 
@@ -74,11 +76,11 @@ The imported lessons omit duration estimates because the source notes do not
 specify per-step timings. `status: ready` identifies populated lesson content,
 not a claim that the application requirements have already been implemented.
 
-The `order` must match the filename. Lesson content must contain exactly these
-second-level headings, in order: `Research`, `Plan`, `Implement`, and `Review`.
-Each phase must include at least one prompt block using the fenced Markdown
-convention below. Prompt blocks are intentionally plain Markdown so they remain
-readable before interactive rendering is added:
+The `order` must match the filename. RPI feature steps must contain exactly
+these second-level headings, in order: `Research`, `Plan`, `Implement`, and
+`Review`; each phase must include at least one prompt block using the fenced
+Markdown convention below. Prompt blocks are intentionally plain Markdown so
+they remain readable before interactive rendering is added:
 
 ````markdown
 ```prompt
@@ -86,18 +88,24 @@ Give the agent a bounded, actionable instruction.
 ```
 ````
 
+Step 0 uses `workflow: setup` and is validated for its required preparation
+headings rather than RPI prompt blocks.
+
 Run `npm run check` while authoring. It validates the Astro collection schema,
-the seven filenames and order rules, required phases, and prompt blocks with
+the eight filenames and order rules, required setup or RPI content, and prompt blocks with
 file-specific error messages. `npm run build` runs the same content validation
 before producing the static site.
 
 ## Workshop content source
 
-The seven lessons are adapted from
+The seven feature lessons are adapted from
 [`agentic-engineering-experiment/notes/prompts`](https://github.com/sinannar/agentic-engineering-experiment/tree/main/notes/prompts).
 All 28 Research, Plan, Implement, and Review prompt bodies are preserved;
 headings and fences are adapted for this site's phase navigation and copy controls.
-The `0-feature(template).md` file is intentionally excluded.
+The `0-feature(template).md` source file is intentionally excluded. The
+workshop's separate `0-workshop-setup.md` step directs participants to fork
+the prepared template, create a Codespace, verify the toolchain, and inspect
+the completed reference stack.
 
 Setup context comes from the prompt index and surrounding `notes/` documents.
 The seven-file prompt index is the current sequence; older notes describe an

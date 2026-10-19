@@ -4,11 +4,12 @@ import { glob } from 'astro/loaders';
 const lessons = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/lessons' }),
   schema: z.object({
-    order: z.number().int().min(1).max(7),
+    order: z.number().int().min(0).max(7),
     title: z.string().min(1),
     summary: z.string().min(1),
     feature: z.string().min(1),
     estimatedMinutes: z.number().int().positive().optional(),
+    workflow: z.enum(['setup', 'rpi']).default('rpi'),
     status: z.enum(['fixture', 'draft', 'ready']).default('draft'),
   }),
 });

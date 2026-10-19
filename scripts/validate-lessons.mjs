@@ -3,6 +3,7 @@ import { join } from 'node:path';
 
 const lessonsDirectory = new URL('../src/content/lessons/', import.meta.url);
 const expectedLessons = [
+  '0-workshop-setup.md',
   '1-feature-customers.md',
   '2-feature-tickets.md',
   '3-feature-attachments.md',
@@ -12,6 +13,7 @@ const expectedLessons = [
   '7-feature-ui-ux.md',
 ];
 const requiredPhases = ['Research', 'Plan', 'Implement', 'Review'];
+const setupHeadings = ['Fork the template', 'Create a Codespace', 'Verify the environment', 'Inspect the completed stacked PRs'];
 
 const errors = [];
 const files = (await readdir(lessonsDirectory)).filter((file) => file.endsWith('.md')).sort();
@@ -68,22 +70,34 @@ for (const filename of expectedLessons) {
     errors.push(`${filename}: status must be fixture, draft, or ready`);
   }
 
-  const headings = [...source.matchAll(headingPattern)].map((match) => match[1]);
-  if (headings.join('|') !== requiredPhases.join('|')) {
-    errors.push(`${filename}: headings must contain exactly this ordered sequence: ${requiredPhases.join(', ')}`);
+  const workflow = metadata.workflow ?? 'rpi';
+  if (!['setup', 'rpi'].includes(workflow)) {
+    errors.push(`${filename}: workflow must be setup or rpi`);
   }
 
-  const phaseRanges = [...source.matchAll(headingPattern)].map((match, index, matches) => ({
-    name: match[1],
-    start: match.index + match[0].length,
-    end: matches[index + 1]?.index ?? source.length,
-  }));
-  for (const phase of phaseRanges) {
-    const body = source.slice(phase.start, phase.end);
-    if (!promptPattern.test(body)) {
-      errors.push(`${filename}: ${phase.name} must contain at least one \`\`\`prompt fenced block`);
+  if (workflow === 'setup') {
+    const headings = [...source.matchAll(/^##\s+(.+?)\s*$/gm)].map((match) => match[1]);
+    if (headings.join('|') !== setupHeadings.join('|')) {
+      errors.push(`${filename}: setup headings must contain exactly this ordered sequence: ${setupHeadings.join(', ')}`);
     }
-    promptPattern.lastIndex = 0;
+  } else {
+    const headings = [...source.matchAll(headingPattern)].map((match) => match[1]);
+    if (headings.join('|') !== requiredPhases.join('|')) {
+      errors.push(`${filename}: headings must contain exactly this ordered sequence: ${requiredPhases.join(', ')}`);
+    }
+
+    const phaseRanges = [...source.matchAll(headingPattern)].map((match, index, matches) => ({
+      name: match[1],
+      start: match.index + match[0].length,
+      end: matches[index + 1]?.index ?? source.length,
+    }));
+    for (const phase of phaseRanges) {
+      const body = source.slice(phase.start, phase.end);
+      if (!promptPattern.test(body)) {
+        errors.push(`${filename}: ${phase.name} must contain at least one \`\`\`prompt fenced block`);
+      }
+      promptPattern.lastIndex = 0;
+    }
   }
 }
 
@@ -92,4 +106,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`Validated ${expectedLessons.length} workshop lessons and their RPI prompt blocks.`);
+console.log(`Validated ${expectedLessons.length} workshop steps and their setup or RPI content.`);

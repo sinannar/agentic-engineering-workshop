@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import LessonPager from '../../components/LessonPager.astro';
 import LessonPhaseNav from '../../components/LessonPhaseNav.astro';
 import LessonSidebar from '../../components/LessonSidebar.astro';
+import SetupGuide from '../../components/SetupGuide.astro';
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
 export async function getStaticPaths() {
@@ -35,7 +36,7 @@ const description = lesson.data.summary;
     <article class="lesson-article">
       <header class="lesson-header">
         <div class="lesson-kicker">
-          <span class="eyebrow">Lesson {String(lesson.data.order).padStart(2, '0')}</span>
+          <span class="eyebrow">{lesson.data.workflow === 'setup' ? 'Step 0 / Preparation' : `Step ${String(lesson.data.order).padStart(2, '0')}`}</span>
           <span class="lesson-status" data-lesson-status={lesson.data.status}>{lesson.data.status}</span>
         </div>
         <h1>{lesson.data.title}</h1>
@@ -51,19 +52,23 @@ const description = lesson.data.summary;
         </div>
       </header>
 
-      <LessonPhaseNav />
+      {lesson.data.workflow === 'rpi' && <LessonPhaseNav />}
 
-      <div class="lesson-content" data-lesson-content>
-        <Content />
-      </div>
+      {lesson.data.workflow === 'setup' ? <SetupGuide /> : (
+        <div class="lesson-content" data-lesson-content>
+          <Content />
+        </div>
+      )}
 
-      <div class="workflow-controls" data-workflow-controls hidden>
-        <button class="button secondary" type="button" data-mark-lesson-complete>Mark lesson complete</button>
-        <button class="button secondary" type="button" data-reset-progress>Reset saved progress</button>
-        <span class="workflow-status" data-workflow-status role="status" aria-live="polite"></span>
-      </div>
+      {lesson.data.workflow === 'rpi' && (
+        <div class="workflow-controls" data-workflow-controls hidden>
+          <button class="button secondary" type="button" data-mark-lesson-complete>Mark lesson complete</button>
+          <button class="button secondary" type="button" data-reset-progress>Reset saved progress</button>
+          <span class="workflow-status" data-workflow-status role="status" aria-live="polite"></span>
+        </div>
+      )}
 
-      <section class="follow-up-cycle" data-follow-up-cycle hidden aria-labelledby="follow-up-title">
+      {lesson.data.workflow === 'rpi' && <section class="follow-up-cycle" data-follow-up-cycle hidden aria-labelledby="follow-up-title">
         <div>
           <p class="eyebrow">Keep the loop moving</p>
           <h2 id="follow-up-title">Start another cycle.</h2>
@@ -71,7 +76,7 @@ const description = lesson.data.summary;
         </div>
         <div class="follow-up-cycles" data-follow-up-cycles></div>
         <button class="button" type="button" data-start-cycle>Start another cycle</button>
-      </section>
+      </section>}
 
       <LessonPager previous={previous} next={next} />
     </article>

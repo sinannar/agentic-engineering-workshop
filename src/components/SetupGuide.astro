@@ -1,0 +1,240 @@
+---
+const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+---
+
+<div class="lesson-content setup-guide">
+  <p>
+    Complete this preparation step before starting the SupportHub feature stack.
+    Work in your fork of the template repository; do not make changes in this
+    workshop website repository or in the completed reference repository.
+  </p>
+
+  <section aria-labelledby="fork-template">
+    <h2 id="fork-template">Fork the template</h2>
+    <ol>
+      <li>Open <a href="https://github.com/sinannar/agentic-engineering-template/">agentic-engineering-template</a>.</li>
+      <li>Select <strong>Fork</strong> and create a copy under your GitHub account.</li>
+      <li>Open your fork's <strong>Code</strong> menu and choose the <strong>Codespaces</strong> tab.</li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="create-codespace">
+    <h2 id="create-codespace">Create a Codespace</h2>
+    <ol>
+      <li>In the Codespaces tab, open the <strong>+</strong> menu and choose <strong>New with options…</strong>.</li>
+      <li>Create the Codespace from your fork's <code>main</code> branch.</li>
+      <li>Choose a machine with <strong>at least 4 cores</strong>. An <strong>8-core machine</strong> is preferred for the distributed application, local infrastructure emulators, builds, and tests.</li>
+      <li>Create the Codespace and wait until the dev container finishes starting and the terminal is available. Do not run workshop commands while the container is still configuring.</li>
+    </ol>
+    <figure>
+      <img
+        src={`${base}images/workshop-setup/codespace-options.png`}
+        alt="The GitHub Code menu on the Codespaces tab, with New with options highlighted."
+      />
+      <figcaption>Choose <strong>New with options…</strong> to select the machine configuration before creating the Codespace.</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="verify-environment">
+    <h2 id="verify-environment">Verify the environment</h2>
+    <p>In the Codespace terminal, run each command and confirm it returns version information:</p>
+    <pre><code>aspire --version
+dotnet --version
+dotnet --list-sdks
+gh --version
+copilot --version
+gh stack --version</code></pre>
+    <p>
+      The prepared environment is expected to include the Aspire CLI, a .NET SDK,
+      GitHub CLI, GitHub Copilot CLI, and the <code>gh stack</code> extension. If a
+      command is missing or fails, stop and fix the Codespace setup before continuing;
+      do not substitute a local installation.
+    </p>
+    <figure>
+      <img
+        src={`${base}images/workshop-setup/toolchain-checks.png`}
+        alt="Codespace terminal showing the required Aspire, .NET, GitHub CLI, Copilot CLI, and gh stack version checks."
+      />
+      <figcaption>All six commands should return version information in the Codespace terminal.</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="start-application">
+    <h2 id="start-application">Start the application</h2>
+    <p>From the repository root in the Codespace terminal, start the Aspire application:</p>
+    <pre><code>aspire start</code></pre>
+    <p>
+      Aspire prints a Dashboard login URL containing a secret in its
+      <code>t</code> query parameter. Copy that secret locally. It is required if
+      you open the Dashboard through a forwarded port. Treat it as a credential:
+      do not commit it, paste it into an issue, or share it in chat.
+    </p>
+    <figure>
+      <img
+        src={`${base}images/workshop-setup/aspire-start.png`}
+        alt="Codespace terminal showing the Aspire CLI banner and startup output. The dashboard credential is intentionally not shown."
+      />
+      <figcaption>The Aspire CLI starts from the repository root. Keep the Dashboard login secret local.</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="confirm-health">
+    <h2 id="confirm-health">Confirm application health</h2>
+    <p>
+      Wait for the distributed resources to start, then run:
+    </p>
+    <pre><code>aspire describe</code></pre>
+    <p>
+      Continue when the required application services and infrastructure resources
+      report <strong>Running</strong> and <strong>Healthy</strong>. The interactive
+      <code>supporthub-cli</code> resource can remain <strong>NotStarted</strong>
+      until you intentionally launch it.
+    </p>
+    <figure>
+      <img
+        src={`${base}images/workshop-setup/aspire-describe-health.png`}
+        alt="Codespace terminal output from aspire describe, listing SupportHub resources with Running state and Healthy health."
+      />
+      <figcaption>Use <code>aspire describe</code> to wait for the expected resources to become healthy.</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="open-dashboard">
+    <h2 id="open-dashboard">Open the Aspire Dashboard</h2>
+    <p>
+      Alternatively, open the Codespaces <strong>Ports</strong> panel, locate
+      <strong>aspire-dashboard-https (17119)</strong>, and open its forwarded address.
+      When the Dashboard asks you to sign in, paste the secret you copied from the
+      <code>aspire start</code> output.
+    </p>
+    <figure>
+      <img
+        src={`${base}images/workshop-setup/dashboard-port.png`}
+        alt="Codespaces Ports panel with the aspire-dashboard-https port 17119 highlighted and its forwarded address available to open."
+      />
+      <figcaption>Open the forwarded address for <code>aspire-dashboard-https (17119)</code>.</figcaption>
+    </figure>
+    <p>
+      A successful dashboard shows the SupportHub resources and their current
+      states. Use it throughout the workshop to inspect resource health, logs,
+      traces, and endpoints.
+    </p>
+    <figure>
+      <img
+        src={`${base}images/workshop-setup/dashboard-resources.png`}
+        alt="Aspire Dashboard Resources view showing the SupportHub distributed application with its services and infrastructure running."
+      />
+      <figcaption>A healthy SupportHub run in the Aspire Dashboard.</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="open-webfrontend">
+    <h2 id="open-webfrontend">Open the Blazor frontend</h2>
+    <p>
+      In the Codespaces <strong>Ports</strong> panel, locate
+      <strong>webfrontend-https (7274)</strong> and open its forwarded address.
+      This confirms that the Blazor frontend is reachable through Aspire and
+      Codespaces port forwarding.
+    </p>
+    <figure>
+      <img
+        src={`${base}images/workshop-setup/webfrontend-port.png`}
+        alt="Codespaces Ports panel with webfrontend-https port 7274 highlighted and its forwarded address available to open."
+      />
+      <figcaption>Open the forwarded address for <code>webfrontend-https (7274)</code>.</figcaption>
+    </figure>
+    <p>
+      A successful navigation displays the default SupportHub Blazor page with
+      the Home and Counter navigation items. The workshop feature steps replace
+      this baseline presentation incrementally.
+    </p>
+    <figure>
+      <img
+        src={`${base}images/workshop-setup/webfrontend-home.png`}
+        alt="The default SupportHub Blazor home page showing a Hello, world welcome message and Home and Counter navigation."
+      />
+      <figcaption>The default Blazor frontend confirms the prepared application is reachable.</figcaption>
+    </figure>
+  </section>
+
+  <section aria-labelledby="inspect-reference-stack">
+    <h2 id="inspect-reference-stack">Inspect the completed stacked PRs</h2>
+    <p>
+      The <a href="https://github.com/sinannar/agentic-engineering-experiment">agentic-engineering-experiment</a>
+      repository is the completed reference. Its stacked pull requests are
+      intentionally still open so you can inspect their order and parent relationships.
+    </p>
+    <p>
+      Open <a href="https://github.com/sinannar/agentic-engineering-experiment/pulls">its pull requests</a>
+      and use GitHub's stack indicator to inspect the sequence. The reference stack
+      starts with <code>feature/customers</code> targeting <code>main</code>, continues
+      through <code>feature/tickets</code>, <code>feature/attachments</code>,
+      <code>feature/activity</code>, <code>feature/sla</code>,
+      <code>feature/dashboard</code>, and <code>feature/ui-ux</code>, with a
+      <code>devcontainer</code> pull request on top.
+    </p>
+    <div class="setup-stack-images">
+      <figure>
+        <img
+          src={`${base}images/workshop-setup/stack-picker.png`}
+          alt="GitHub stack picker showing the devcontainer pull request above the UI/UX, dashboard, SLA, activity, attachments, tickets, and customers pull requests."
+        />
+        <figcaption>The stack picker displays the parent-to-child pull request order.</figcaption>
+      </figure>
+      <figure>
+        <img
+          src={`${base}images/workshop-setup/stack-merge.png`}
+          alt="GitHub stack merge panel showing the ordered pull requests and their ready status."
+        />
+        <figcaption>The merge panel shows the ordered stack and its readiness.</figcaption>
+      </figure>
+      <figure>
+        <img
+          src={`${base}images/workshop-setup/stack-indicators.png`}
+          alt="GitHub pull request list showing the stack position indicator next to every open reference pull request."
+        />
+        <figcaption>Stack indicators show every pull request's position in the sequence.</figcaption>
+      </figure>
+    </div>
+    <p>
+      Use the reference to understand the stack only. Do not merge, close, edit, or
+      push to its pull requests. Return to your fork and continue to Customer Management.
+    </p>
+  </section>
+
+  <section aria-labelledby="final-goal">
+    <h2 id="final-goal">Final goal</h2>
+    <p>
+      By the end of the seven feature steps, your fork should be a working
+      SupportHub ticketing system: a focused operations dashboard, a filterable
+      ticket queue, and customer records that support the work in that queue.
+    </p>
+    <p>
+      The screens below show the intended end state. Customer and ticket record
+      data has been redacted; use your own test data while completing the workshop.
+    </p>
+    <div class="setup-final-goal-images">
+      <figure>
+        <img
+          src={`${base}images/workshop-setup/final-dashboard.png`}
+          alt="Completed SupportHub overview dashboard showing open ticket, SLA, status, and priority summaries."
+        />
+        <figcaption>Operations overview with ticket and SLA summaries.</figcaption>
+      </figure>
+      <figure>
+        <img
+          src={`${base}images/workshop-setup/final-tickets.png`}
+          alt="Completed SupportHub ticket queue with filtering controls. Ticket and customer record details are redacted."
+        />
+        <figcaption>Filterable ticket queue. Record details are redacted.</figcaption>
+      </figure>
+      <figure>
+        <img
+          src={`${base}images/workshop-setup/final-customers.png`}
+          alt="Completed SupportHub customer directory. Customer record details are redacted."
+        />
+        <figcaption>Customer directory. Record details are redacted.</figcaption>
+      </figure>
+    </div>
+  </section>
+</div>

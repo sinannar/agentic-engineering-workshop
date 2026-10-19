@@ -5,6 +5,7 @@ interface LessonLink {
     order: number;
     title: string;
     feature: string;
+    workflow: 'setup' | 'rpi';
   };
 }
 
@@ -20,14 +21,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <nav class="lesson-pager" aria-label="Lesson navigation">
   {previous ? (
     <a class="lesson-pager-link previous" href={`${base}/lessons/${previous.id}/`}>
-      <span class="mono">← Previous lesson</span>
-      <strong>{previous.data.feature}</strong>
+      <span class="mono">← Previous step</span>
+      <strong>{previous.data.workflow === 'setup' ? 'Setup' : previous.data.feature}</strong>
     </a>
   ) : <span></span>}
   {next ? (
     <a class="lesson-pager-link next" href={`${base}/lessons/${next.id}/`}>
-      <span class="mono">Next lesson →</span>
-      <strong>{next.data.feature}</strong>
+      <span class="mono">Next step →</span>
+      <strong>{next.data.workflow === 'setup' ? 'Setup' : next.data.feature}</strong>
     </a>
   ) : <a class="lesson-pager-link next" href={`${base}/#lessons`}>
     <span class="mono">Back to path →</span>

@@ -6,6 +6,7 @@ interface LessonSummary {
     title: string;
     feature: string;
     estimatedMinutes?: number;
+    workflow: 'setup' | 'rpi';
   };
 }
 
@@ -20,7 +21,7 @@ const { lessons, currentId } = Astro.props;
 <aside class="lesson-sidebar" aria-label="Workshop lessons">
   <div class="lesson-sidebar-heading">
     <p class="eyebrow">Workshop path</p>
-    <span class="mono">{lessons.length} lessons</span>
+    <span class="mono">{lessons.length - 1} feature steps</span>
   </div>
   <nav class="lesson-steps">
     {lessons.map((lesson) => (
@@ -32,7 +33,7 @@ const { lessons, currentId } = Astro.props;
       >
         <span class="lesson-step-number">{String(lesson.data.order).padStart(2, '0')}</span>
         <span class="lesson-step-copy">
-          <strong>{lesson.data.feature}</strong>
+          <strong>{lesson.data.workflow === 'setup' ? 'Step 0 · Setup' : lesson.data.feature}</strong>
           {lesson.data.estimatedMinutes && <small>{lesson.data.estimatedMinutes} min</small>}
         </span>
       </a>
