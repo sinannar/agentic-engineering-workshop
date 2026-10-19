@@ -1,6 +1,5 @@
 ---
 import { getCollection } from 'astro:content';
-import ProgressSummary from '../components/ProgressSummary.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 
 const lessons = (await getCollection('lessons')).sort((a, b) => a.data.order - b.data.order);
@@ -8,6 +7,7 @@ const setupLesson = lessons.find((lesson) => lesson.data.workflow === 'setup') ?
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const finalWorkshopUrl = 'https://github.com/sinannar/agenticengineeringday2026-experiment';
 const templateUrl = 'https://github.com/sinannar/agenticengineeringday2026-template';
+const websiteRepoUrl = 'https://github.com/sinannar/agenticengineeringday2026-workshop';
 
 const workflow = [
   {
@@ -89,33 +89,54 @@ const toolkit = [
     </div>
   </section>
 
-  <section class="container intro-band" aria-labelledby="intro-title">
-    <div class="intro-copy">
-      <p class="eyebrow">Beyond vibe coding</p>
-      <h2 id="intro-title">Better software needs more than generated code.</h2>
+  <section class="container lifecycle-section" aria-labelledby="intro-title">
+    <div class="lifecycle-intro intro-band">
+      <div class="intro-copy">
+        <p class="eyebrow">Beyond vibe coding</p>
+        <h2 id="intro-title">Better software needs more than generated code.</h2>
+      </div>
+      <div class="prep-grid">
+        <p>
+          AI can generate code in seconds. Engineering reliable software requires more:
+          clear requirements, deliberate planning, incremental implementation, automated
+          validation, and thoughtful review.
+        </p>
+        <p>
+          In this workshop, AI agents become collaborators throughout the software delivery
+          lifecycle. The goal is not to generate more code. It is to deliver better software
+          with greater confidence.
+        </p>
+      </div>
     </div>
-    <div class="prep-grid">
-      <p>
-        AI can generate code in seconds. Engineering reliable software requires more:
-        clear requirements, deliberate planning, incremental implementation, automated
-        validation, and thoughtful review.
-      </p>
-      <p>
-        In this workshop, AI agents become collaborators throughout the software delivery
-        lifecycle. The goal is not to generate more code. It is to deliver better software
-        with greater confidence.
-      </p>
-      <p class="mono">Research → Plan → Implement → Review</p>
+    <div class="lifecycle-method">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">The engineering workflow</p>
+          <h2>A repeatable process for every feature.</h2>
+        </div>
+        <p>Powered by HVE Core's Research–Plan–Implement–Review methodology.</p>
+      </div>
+      <div class="method-grid">
+        {workflow.map((step) => (
+          <article class="method-step">
+            <span class="method-index">{step.number}</span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
   <section id="workshop" class="container section" aria-labelledby="build-title">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">What you'll use</p>
-        <h2 id="build-title">Technology for modern distributed applications.</h2>
+        <p class="eyebrow">Technology &amp; tools</p>
+        <h2 id="build-title">The stack for modern agentic development.</h2>
       </div>
-      <p>SupportHub is the example application. The focus is learning how these technologies work together in a real system.</p>
+      <p>SupportHub is the example application. The focus is learning how the application stack and engineering tools work together in a real system.</p>
     </div>
     <ul class="technology-list">
       <li>
@@ -142,50 +163,14 @@ const toolkit = [
         <span class="technology-bullet" aria-hidden="true">↗</span>
         <div><strong>Messaging &amp; workers</strong><span>Process background activity with Service Bus, Cosmos DB, and scheduled services.</span></div>
       </li>
-    </ul>
-  </section>
-
-  <section class="method-section" aria-labelledby="method-title">
-    <div class="container section">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">The engineering workflow</p>
-          <h2 id="method-title">A repeatable process for every feature.</h2>
-        </div>
-        <p>Powered by HVE Core's Research–Plan–Implement–Review methodology.</p>
-      </div>
-      <div class="method-grid">
-        {workflow.map((step) => (
-          <article class="method-step">
-            <span class="method-index">{step.number}</span>
-            <div>
-              <h3>{step.title}</h3>
-              <p>{step.description}</p>
-            </div>
-          </article>
+      {toolkit
+        .filter(([title]) => !['.NET 10', 'Aspire', 'Blazor'].includes(title))
+        .map(([title, description]) => (
+          <li>
+            <span class="technology-bullet" aria-hidden="true">↗</span>
+            <div><strong>{title}</strong><span>{description}</span></div>
+          </li>
         ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="container section" aria-labelledby="toolkit-title">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">Your agentic engineering toolkit</p>
-        <h2 id="toolkit-title">Tools support the practice.</h2>
-      </div>
-      <p>The tools are important, but the engineering practices are the focus.</p>
-    </div>
-    <ul class="toolkit-list">
-      {toolkit.map(([title, description]) => (
-        <li>
-          <span class="toolkit-bullet" aria-hidden="true">↗</span>
-          <div>
-            <h3>{title}</h3>
-            <p>{description}</p>
-          </div>
-        </li>
-      ))}
     </ul>
   </section>
 
@@ -208,16 +193,16 @@ const toolkit = [
     </ul>
   </section>
 
-  <section class="container section progress-section" aria-labelledby="ready-title">
-    <div class="ready-panel">
-      <div>
-        <p class="eyebrow">Ready to engineer with agents?</p>
-        <h2 id="ready-title">Start with one feature at a time.</h2>
-        <p>Research deliberately. Plan clearly. Implement incrementally. Review rigorously.</p>
-      </div>
-      <a class="button" href={`${base}/lessons/${setupLesson.id}/`}>Start the workshop <span aria-hidden="true">↗</span></a>
+  <section class="container repository-footer" aria-labelledby="repositories-title">
+    <div>
+      <p class="eyebrow">Explore the code</p>
+      <h2 id="repositories-title">Three repositories. One learning journey.</h2>
     </div>
-    <ProgressSummary />
+    <nav aria-label="Workshop repositories">
+      <a href={templateUrl}><strong>Template</strong><span>Start with Aspire</span><span aria-hidden="true">↗</span></a>
+      <a href={finalWorkshopUrl}><strong>Final workshop</strong><span>See the completed build</span><span aria-hidden="true">↗</span></a>
+      <a href={websiteRepoUrl}><strong>Astro / GitHub Pages</strong><span>Explore the Astro source for this site</span><span aria-hidden="true">↗</span></a>
+    </nav>
   </section>
 </SiteLayout>
 
@@ -226,8 +211,50 @@ const toolkit = [
     min-height: min(700px, calc(100vh - 5.25rem));
   }
 
+  .lifecycle-section {
+    padding-block: clamp(4rem, 8vw, 7rem);
+  }
+
+  .lifecycle-method {
+    padding-top: clamp(3rem, 6vw, 5rem);
+  }
+
   .text-link {
     font-size: 0.92rem;
+  }
+
+  .lifecycle-track {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+    border-block: 1px solid var(--line);
+  }
+
+  .lifecycle-track li {
+    display: grid;
+    gap: 0.45rem;
+    padding: 1rem 1rem 1rem 0;
+    border-right: 1px solid var(--line);
+  }
+
+  .lifecycle-track li:not(:first-child) {
+    padding-left: 1rem;
+  }
+
+  .lifecycle-track li:last-child {
+    border-right: 0;
+  }
+
+  .lifecycle-track span {
+    color: var(--accent-strong);
+    font: 0.68rem var(--font-mono);
+  }
+
+  .lifecycle-track strong {
+    font-size: 1rem;
   }
 
   .technology-list {
@@ -282,56 +309,13 @@ const toolkit = [
     font: 0.72rem var(--font-mono);
   }
 
-  .repo-links a,
-  .repository-list a {
+  .repo-links a {
     color: var(--accent-strong);
     text-decoration: none;
   }
 
-  .repo-links a:hover,
-  .repository-list a:hover {
+  .repo-links a:hover {
     color: var(--ink);
-  }
-
-  .toolkit-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    border-top: 1px solid var(--line);
-  }
-
-  .toolkit-list li {
-    display: grid;
-    grid-template-columns: 1.7rem 1fr;
-    gap: 0.75rem;
-    align-items: start;
-    padding: 1.25rem 1.5rem 1.25rem 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .toolkit-bullet {
-    display: grid;
-    width: 1.55rem;
-    height: 1.55rem;
-    place-items: center;
-    border: 1px solid var(--accent);
-    border-radius: 50%;
-    color: var(--accent);
-    font: 0.7rem var(--font-mono);
-  }
-
-  .toolkit-list h3 {
-    margin: 0;
-    font-size: 1rem;
-  }
-
-  .toolkit-list p {
-    margin: 0.25rem 0 0;
-    color: var(--ink-soft);
-    font-size: 0.9rem;
   }
 
   .learning-list {
@@ -370,54 +354,76 @@ const toolkit = [
     color: var(--ink);
   }
 
-  .ready-panel {
+  .repository-footer {
     display: flex;
-    align-items: end;
+    align-items: start;
     justify-content: space-between;
     gap: 2rem;
-    padding: clamp(1.5rem, 4vw, 3rem);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    background: var(--ink);
-    color: var(--canvas);
+    padding-block: 2rem 4rem;
+    border-top: 1px solid var(--line);
   }
 
-  .ready-panel h2 {
-    max-width: 560px;
+  .repository-footer h2 {
+    max-width: 380px;
     margin: 0;
-    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
     letter-spacing: -0.055em;
     line-height: 1;
   }
 
-  .ready-panel p:last-child {
-    margin-bottom: 0;
-    color: color-mix(in srgb, var(--canvas) 72%, transparent);
+  .repository-footer nav {
+    display: grid;
+    min-width: min(100%, 500px);
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--line);
   }
 
-  .ready-panel .eyebrow {
-    color: var(--lime);
+  .repository-footer a {
+    display: grid;
+    gap: 0.3rem;
+    align-content: start;
+    padding: 1rem 1rem 0 0;
+    border-right: 1px solid var(--line);
+    color: var(--accent-strong);
+    text-decoration: none;
   }
 
-  .ready-panel .button {
-    flex-shrink: 0;
-    border-color: var(--lime);
-    background: var(--lime);
+  .repository-footer a:not(:first-child) {
+    padding-left: 1rem;
+  }
+
+  .repository-footer a:last-child {
+    border-right: 0;
+  }
+
+  .repository-footer a:hover {
     color: var(--ink);
   }
 
-  .ready-panel .button:hover {
-    border-color: var(--accent);
-    background: var(--accent);
-    color: var(--canvas);
+  .repository-footer a span:nth-child(2) {
+    color: var(--ink-soft);
+    font-size: 0.82rem;
   }
 
   @media (max-width: 780px) {
-    .technology-list {
-      grid-template-columns: 1fr;
+    .lifecycle-track {
+      grid-template-columns: repeat(2, 1fr);
     }
 
-    .toolkit-list {
+    .lifecycle-track li:nth-child(2) {
+      border-right: 0;
+    }
+
+    .lifecycle-track li:nth-child(3),
+    .lifecycle-track li:nth-child(4) {
+      border-top: 1px solid var(--line);
+    }
+
+    .lifecycle-track li:nth-child(3) {
+      padding-left: 0;
+    }
+
+    .technology-list {
       grid-template-columns: 1fr;
     }
 
@@ -425,9 +431,40 @@ const toolkit = [
       grid-template-columns: 1fr;
     }
 
-    .ready-panel {
-      align-items: start;
+    .repository-footer {
       flex-direction: column;
+    }
+
+    .repository-footer nav {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .lifecycle-track {
+      grid-template-columns: 1fr;
+    }
+
+    .lifecycle-track li,
+    .lifecycle-track li:not(:first-child) {
+      padding-inline: 0;
+      border-right: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .lifecycle-track li:first-child {
+      border-top: 0;
+    }
+
+    .repository-footer nav {
+      grid-template-columns: 1fr;
+    }
+
+    .repository-footer a,
+    .repository-footer a:not(:first-child) {
+      padding-inline: 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
     }
   }
 </style>

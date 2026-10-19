@@ -5,33 +5,55 @@ const base = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 <div class="lesson-content setup-guide">
   <p>
     Complete this preparation step before starting the SupportHub feature stack.
-    Work in your fork of the template repository; do not make changes in this
-    workshop website repository or in the completed reference repository.
+    Create your own repository from the prepared template; do not make changes in
+    this workshop website repository or in the completed reference repository.
   </p>
 
-  <section aria-labelledby="fork-template">
-    <h2 id="fork-template">Fork the template</h2>
+  <section aria-labelledby="create-repository">
+    <h2 id="create-repository">Create your workshop repository</h2>
     <ol>
       <li>Open <a href="https://github.com/sinannar/agenticengineeringday2026-template">agenticengineeringday2026-template</a>.</li>
-      <li>Select <strong>Fork</strong> and create a copy under your GitHub account.</li>
-      <li>Open your fork's <strong>Code</strong> menu and choose the <strong>Codespaces</strong> tab.</li>
+      <li>Open <strong>Use this template</strong> and choose <strong>Create a new repository</strong>.</li>
+      <li>Choose a repository name, then create the repository under your GitHub account.</li>
+      <li>Open your new repository and use its <strong>Code</strong> menu to create a Codespace.</li>
     </ol>
+    <figure>
+      <img
+        src={`${base}images/workshop-setup/template-use.png`}
+        alt="The template repository Use this template menu with Create a new repository highlighted."
+      />
+      <figcaption>Start from the prepared Aspire template by choosing <strong>Use this template → Create a new repository</strong>.</figcaption>
+    </figure>
+    <figure>
+      <img
+        src={`${base}images/workshop-setup/template-create-repository.png`}
+        alt="GitHub Create a new repository page showing the selected template and repository name field."
+      />
+      <figcaption>Choose a name for your workshop repository and create it under your account.</figcaption>
+    </figure>
   </section>
 
   <section aria-labelledby="create-codespace">
     <h2 id="create-codespace">Create a Codespace</h2>
     <ol>
-      <li>In the Codespaces tab, open the <strong>+</strong> menu and choose <strong>New with options…</strong>.</li>
-      <li>Create the Codespace from your fork's <code>main</code> branch.</li>
+      <li>In your new repository, open <strong>Code</strong>, switch to <strong>Codespaces</strong>, and choose <strong>New with options…</strong>.</li>
+      <li>Create the Codespace from your repository's <code>main</code> branch.</li>
       <li>Choose a machine with <strong>at least 4 cores</strong>. An <strong>8-core machine</strong> is preferred for the distributed application, local infrastructure emulators, builds, and tests.</li>
       <li>Create the Codespace and wait until the dev container finishes starting and the terminal is available. Do not run workshop commands while the container is still configuring.</li>
     </ol>
     <figure>
       <img
-        src={`${base}images/workshop-setup/codespace-options.png`}
-        alt="The GitHub Code menu on the Codespaces tab, with New with options highlighted."
+        src={`${base}images/workshop-setup/codespace-menu.png`}
+        alt="The repository Code menu open on the Codespaces tab with New with options highlighted."
       />
-      <figcaption>Choose <strong>New with options…</strong> to select the machine configuration before creating the Codespace.</figcaption>
+      <figcaption>Open the Codespaces tab in your own repository and choose <strong>New with options…</strong>.</figcaption>
+    </figure>
+    <figure>
+      <img
+        src={`${base}images/workshop-setup/codespace-machine-options.png`}
+        alt="GitHub Codespaces creation page for a workshop repository showing the main branch, dev container configuration, and 8-core machine option."
+      />
+      <figcaption>Select your repository's <code>main</code> branch, the workshop dev container, and a machine with at least four cores.</figcaption>
     </figure>
   </section>
 
@@ -198,14 +220,14 @@ gh stack --version</code></pre>
     </div>
     <p>
       Use the reference to understand the stack only. Do not merge, close, edit, or
-      push to its pull requests. Return to your fork and continue to Customer Management.
+      push to its pull requests.       Return to your workshop repository and continue to Customer Management.
     </p>
   </section>
 
   <section aria-labelledby="final-goal">
     <h2 id="final-goal">Final goal</h2>
     <p>
-      By the end of the seven feature steps, your fork should be a working
+      By the end of the seven feature steps, your workshop repository should be a working
       SupportHub ticketing system: a focused operations dashboard, a filterable
       ticket queue, and customer records that support the work in that queue.
     </p>

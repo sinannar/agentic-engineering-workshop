@@ -13,7 +13,7 @@ const expectedLessons = [
   '7-feature-ui-ux.md',
 ];
 const requiredPhases = ['Research', 'Plan', 'Implement', 'Review'];
-const setupHeadings = ['Fork the template', 'Create a Codespace', 'Verify the environment', 'Inspect the completed stacked PRs'];
+const setupHeadings = ['Create your workshop repository', 'Create a Codespace', 'Verify the environment', 'Inspect the completed stacked PRs'];
 
 const errors = [];
 const files = (await readdir(lessonsDirectory)).filter((file) => file.endsWith('.md')).sort();
