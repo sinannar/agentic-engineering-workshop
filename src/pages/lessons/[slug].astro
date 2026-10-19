@@ -1,0 +1,251 @@
+---
+import { getCollection, render } from 'astro:content';
+import LessonPager from '../../components/LessonPager.astro';
+import LessonPhaseNav from '../../components/LessonPhaseNav.astro';
+import LessonSidebar from '../../components/LessonSidebar.astro';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+
+export async function getStaticPaths() {
+  const lessons = (await getCollection('lessons')).sort((a, b) => a.data.order - b.data.order);
+  return lessons.map((lesson, index) => ({
+    params: { slug: lesson.id },
+    props: {
+      lesson,
+      previous: lessons[index - 1],
+      next: lessons[index + 1],
+      lessons,
+    },
+  }));
+}
+
+const { lesson, previous, next } = Astro.props;
+const lessons = (await getCollection('lessons')).sort((a, b) => a.data.order - b.data.order);
+const { Content } = await render(lesson);
+const description = `${lesson.data.summary} A ${lesson.data.estimatedMinutes}-minute workshop lesson on ${lesson.data.feature}.`;
+---
+
+<SiteLayout title={`${lesson.data.title} — Agentic Engineering Workshop`} description={description}>
+  <div
+    class="lesson-shell container"
+    data-lesson={lesson.id}
+    data-lesson-order={lesson.data.order}
+    data-progress-key={`lesson:${lesson.id}`}
+  >
+    <LessonSidebar lessons={lessons} currentId={lesson.id} />
+    <article class="lesson-article">
+      <header class="lesson-header">
+        <div class="lesson-kicker">
+          <span class="eyebrow">Lesson {String(lesson.data.order).padStart(2, '0')}</span>
+          <span class="lesson-status" data-lesson-status={lesson.data.status}>{lesson.data.status}</span>
+        </div>
+        <h1>{lesson.data.title}</h1>
+        <p class="lesson-summary">{lesson.data.summary}</p>
+        <div class="lesson-meta" aria-label="Lesson details">
+          <span class="mono">{lesson.data.feature}</span>
+          <span aria-hidden="true">·</span>
+          <span>{lesson.data.estimatedMinutes} minutes</span>
+        </div>
+      </header>
+
+      <LessonPhaseNav />
+
+      <div class="lesson-content" data-lesson-content>
+        <Content />
+      </div>
+
+      <div class="workflow-controls" data-workflow-controls hidden>
+        <button class="button secondary" type="button" data-mark-lesson-complete>Mark lesson complete</button>
+        <button class="button secondary" type="button" data-reset-progress>Reset saved progress</button>
+        <span class="workflow-status" data-workflow-status role="status" aria-live="polite"></span>
+      </div>
+
+      <section class="follow-up-cycle" data-follow-up-cycle hidden aria-labelledby="follow-up-title">
+        <div>
+          <p class="eyebrow">Keep the loop moving</p>
+          <h2 id="follow-up-title">Start another cycle.</h2>
+          <p>Try a fresh Research → Plan → Implement pass on the next bounded question. These follow-up cycles are intentionally temporary.</p>
+        </div>
+        <div class="follow-up-cycles" data-follow-up-cycles></div>
+        <button class="button" type="button" data-start-cycle>Start another cycle</button>
+      </section>
+
+      <LessonPager previous={previous} next={next} />
+    </article>
+  </div>
+</SiteLayout>
+
+<script>
+  import {
+    PHASES,
+    readProgress,
+    resetProgress,
+    updateProgress,
+  } from '../../scripts/progress';
+
+  const shell = document.querySelector('[data-lesson]');
+  const lessonId = shell?.getAttribute('data-lesson');
+  const phaseNav = document.querySelector('[data-phase-navigation]');
+  const workflowControls = document.querySelector('[data-workflow-controls]');
+  const status = document.querySelector('[data-workflow-status]');
+  const followUp = document.querySelector('[data-follow-up-cycle]');
+  const cycleList = document.querySelector('[data-follow-up-cycles]');
+  const startCycleButton = document.querySelector('[data-start-cycle]');
+  const markLessonButton = document.querySelector('[data-mark-lesson-complete]');
+  const resetButton = document.querySelector('[data-workflow-controls] [data-reset-progress]');
+
+  document.querySelectorAll<HTMLPreElement>('.lesson-content pre').forEach((pre) => {
+    const code = pre.querySelector('code');
+    if (!code) return;
+
+    const copyButton = document.createElement('button');
+    copyButton.className = 'prompt-copy';
+    copyButton.type = 'button';
+    copyButton.textContent = 'Copy prompt';
+    copyButton.setAttribute('aria-live', 'polite');
+    copyButton.setAttribute('aria-label', 'Copy prompt to clipboard');
+    copyButton.addEventListener('click', async () => {
+      const originalLabel = 'Copy prompt';
+      try {
+        await navigator.clipboard.writeText(code.textContent?.trim() ?? '');
+        copyButton.textContent = 'Copied';
+        copyButton.setAttribute('aria-label', 'Prompt copied to clipboard');
+      } catch {
+        copyButton.textContent = 'Copy failed';
+        copyButton.setAttribute('aria-label', 'Copy failed; select the prompt text manually');
+      }
+      window.setTimeout(() => {
+        copyButton.textContent = originalLabel;
+        copyButton.setAttribute('aria-label', 'Copy prompt to clipboard');
+      }, 2200);
+    });
+    pre.append(copyButton);
+  });
+
+  if (shell && lessonId) {
+    const setStatus = (message: string) => status?.replaceChildren(message);
+    const getLesson = () => readProgress().lessons[lessonId] ?? {
+      primaryPhase: 'research',
+      completedPhases: [],
+    };
+
+    const render = () => {
+      const progress = readProgress();
+      const lesson = getLesson();
+      const complete = progress.completedLessons.includes(lessonId);
+
+      workflowControls?.removeAttribute('hidden');
+      phaseNav?.querySelectorAll<HTMLButtonElement>('[data-phase-complete]').forEach((button) => {
+        const phase = button.dataset.phaseComplete;
+        if (!phase) return;
+        const isComplete = lesson.completedPhases.includes(phase as typeof PHASES[number]);
+        button.hidden = false;
+        button.setAttribute('aria-pressed', String(isComplete));
+        button.textContent = isComplete ? 'Completed' : 'Mark complete';
+      });
+      if (markLessonButton instanceof HTMLButtonElement) {
+        markLessonButton.textContent = complete ? 'Lesson complete' : 'Mark lesson complete';
+        markLessonButton.setAttribute('aria-pressed', String(complete));
+      }
+      if (followUp instanceof HTMLElement) followUp.hidden = !complete;
+    };
+
+    const completePhase = (phase: typeof PHASES[number]) => {
+      updateProgress((progress) => {
+        const lesson = getLesson();
+        const completedPhases = Array.from(new Set([...lesson.completedPhases, phase]))
+          .filter((item): item is typeof PHASES[number] => PHASES.includes(item as typeof PHASES[number]));
+        const nextPhase = PHASES.find((item) => !completedPhases.includes(item)) ?? 'review';
+        return {
+          ...progress,
+          primaryPhase: nextPhase,
+          lessons: {
+            ...progress.lessons,
+            [lessonId]: { primaryPhase: nextPhase, completedPhases },
+          },
+          completedLessons: completedPhases.length === PHASES.length
+            ? Array.from(new Set([...progress.completedLessons, lessonId]))
+            : progress.completedLessons.filter((id) => id !== lessonId),
+        };
+      });
+      setStatus(`${phase[0].toUpperCase()}${phase.slice(1)} marked complete.`);
+      render();
+    };
+
+    phaseNav?.querySelectorAll<HTMLAnchorElement>('[data-phase]').forEach((link) => {
+      link.addEventListener('click', () => {
+        const phase = link.dataset.phase;
+        if (!phase || !PHASES.includes(phase as typeof PHASES[number])) return;
+        updateProgress((progress) => ({
+          ...progress,
+          primaryPhase: phase as typeof PHASES[number],
+          lessons: {
+            ...progress.lessons,
+            [lessonId]: { ...getLesson(), primaryPhase: phase as typeof PHASES[number] },
+          },
+        }));
+      });
+    });
+
+    phaseNav?.querySelectorAll<HTMLButtonElement>('[data-phase-complete]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const phase = button.dataset.phaseComplete;
+        if (phase && PHASES.includes(phase as typeof PHASES[number])) completePhase(phase as typeof PHASES[number]);
+      });
+    });
+
+    markLessonButton?.addEventListener('click', () => {
+      updateProgress((progress) => ({
+        ...progress,
+        primaryPhase: 'review',
+        completedLessons: Array.from(new Set([...progress.completedLessons, lessonId])),
+        lessons: {
+          ...progress.lessons,
+          [lessonId]: { primaryPhase: 'review', completedPhases: [...PHASES] },
+        },
+      }));
+      setStatus('Lesson marked complete.');
+      render();
+    });
+
+    resetButton?.addEventListener('click', () => {
+      resetProgress();
+      setStatus('Saved progress reset.');
+      render();
+    });
+
+    const addCycle = () => {
+      if (!(cycleList instanceof HTMLElement)) return;
+      const cycleNumber = cycleList.children.length + 1;
+      const cycle = document.createElement('div');
+      cycle.className = 'follow-up-cycle-card';
+      cycle.innerHTML = `
+        <div class="follow-up-cycle-heading">
+          <strong>Cycle ${cycleNumber}</strong>
+          <span class="mono" data-cycle-status>Research next</span>
+        </div>
+        <ol>${['Research', 'Plan', 'Implement'].map((phase) => `
+          <li><button class="phase-complete" type="button" data-cycle-phase="${phase.toLowerCase()}" aria-pressed="false">Mark ${phase} complete</button></li>
+        `).join('')}</ol>
+      `;
+      cycleList.append(cycle);
+      const buttons = [...cycle.querySelectorAll<HTMLButtonElement>('[data-cycle-phase]')];
+      buttons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+          button.setAttribute('aria-pressed', 'true');
+          button.textContent = 'Completed';
+          const next = buttons[index + 1];
+          const cycleStatus = cycle.querySelector('[data-cycle-status]');
+          if (next) {
+            cycleStatus?.replaceChildren(`${next.dataset.cyclePhase?.replace(/^./, (letter) => letter.toUpperCase())} next`);
+          } else {
+            cycleStatus?.replaceChildren('Cycle complete');
+            cycle.classList.add('is-complete');
+          }
+        });
+      });
+    };
+
+    startCycleButton?.addEventListener('click', addCycle);
+    render();
+  }
+</script>

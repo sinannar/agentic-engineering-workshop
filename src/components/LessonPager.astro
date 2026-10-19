@@ -1,0 +1,36 @@
+---
+interface LessonLink {
+  id: string;
+  data: {
+    order: number;
+    title: string;
+    feature: string;
+  };
+}
+
+interface Props {
+  previous?: LessonLink;
+  next?: LessonLink;
+}
+
+const { previous, next } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<nav class="lesson-pager" aria-label="Lesson navigation">
+  {previous ? (
+    <a class="lesson-pager-link previous" href={`${base}/lessons/${previous.id}/`}>
+      <span class="mono">← Previous lesson</span>
+      <strong>{previous.data.feature}</strong>
+    </a>
+  ) : <span></span>}
+  {next ? (
+    <a class="lesson-pager-link next" href={`${base}/lessons/${next.id}/`}>
+      <span class="mono">Next lesson →</span>
+      <strong>{next.data.feature}</strong>
+    </a>
+  ) : <a class="lesson-pager-link next" href={`${base}/#lessons`}>
+    <span class="mono">Back to path →</span>
+    <strong>Workshop overview</strong>
+  </a>}
+</nav>

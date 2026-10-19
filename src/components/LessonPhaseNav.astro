@@ -1,0 +1,26 @@
+---
+const phases = ['Research', 'Plan', 'Implement', 'Review'];
+---
+
+<nav class="phase-nav" aria-label="Lesson phases" data-phase-navigation>
+  <span class="phase-nav-label mono">In this lesson</span>
+  <ol>
+    {phases.map((phase, index) => (
+      <li>
+        <a href={`#${phase.toLowerCase()}`} data-phase={phase.toLowerCase()}>
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          {phase}
+        </a>
+        <button
+          class="phase-complete"
+          type="button"
+          data-phase-complete={phase.toLowerCase()}
+          aria-pressed="false"
+          hidden
+        >
+          Mark complete
+        </button>
+      </li>
+    ))}
+  </ol>
+</nav>

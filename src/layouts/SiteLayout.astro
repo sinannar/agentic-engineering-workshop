@@ -1,0 +1,48 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Agentic Engineering Workshop',
+  description = 'A hands-on workshop for building reliable software with AI agents.',
+} = Astro.props;
+const canonicalPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = Astro.site ? new URL(canonicalPath, Astro.site) : new URL(canonicalPath, Astro.url);
+---
+
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f4f7fb" />
+    <link rel="canonical" href={canonicalUrl} />
+    <title>{title}</title>
+    <script is:inline>
+      (() => {
+        try {
+          const theme = localStorage.getItem('agentic-workshop-theme');
+          if (theme) document.documentElement.dataset.theme = theme;
+        } catch {}
+      })();
+    </script>
+  </head>
+  <body>
+    <SiteHeader />
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-wrap">
+        <span class="mono">BUILD WITH INTENT / SHIP WITH CONFIDENCE</span>
+        <span>Agentic Engineering Workshop</span>
+      </div>
+    </footer>
+  </body>
+</html>

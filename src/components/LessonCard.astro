@@ -1,0 +1,29 @@
+---
+interface Props {
+  slug: string;
+  order: number;
+  title: string;
+  summary: string;
+  feature: string;
+  estimatedMinutes: number;
+  status: 'fixture' | 'draft' | 'ready';
+}
+
+const { slug, order, title, summary, feature, estimatedMinutes, status } = Astro.props;
+const lessonNumber = String(order).padStart(2, '0');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<a class="landing-lesson-card" href={`${base}/lessons/${slug}/`}>
+  <div class="landing-lesson-card-topline">
+    <span class="card-number">{lessonNumber}</span>
+    <span class:list={['landing-lesson-status', `is-${status}`]}>{status}</span>
+  </div>
+  <p class="lesson-feature mono">{feature}</p>
+  <h3>{title}</h3>
+  <p>{summary}</p>
+  <div class="landing-lesson-meta">
+    <span>{estimatedMinutes} min</span>
+    <span aria-hidden="true">↗</span>
+  </div>
+</a>

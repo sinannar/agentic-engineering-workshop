@@ -1,0 +1,23 @@
+---
+import ThemePicker from './ThemePicker.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href={base} aria-label="Agentic Engineering Workshop home">
+      <span class="brand-mark" aria-hidden="true">ae</span>
+      <span class="brand-copy">
+        Agentic Engineering
+        <small>WORKSHOP / 2026</small>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href={`${base}#lessons`}>Lessons</a>
+      <a href={`${base}#method`}>Method</a>
+      <a href={`${base}#prepare`}>Prepare</a>
+      <ThemePicker />
+    </nav>
+  </div>
+</header>

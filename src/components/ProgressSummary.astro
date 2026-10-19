@@ -1,0 +1,60 @@
+---
+const progressStorageKey = 'agentic-workshop-progress';
+---
+
+<aside class="progress-summary" aria-labelledby="progress-title" data-progress-summary data-storage-key={progressStorageKey}>
+  <div>
+    <p class="eyebrow">Your workspace</p>
+    <h2 id="progress-title">Keep the thread.</h2>
+    <p class="progress-copy">
+      Your completed lessons are saved in this browser so you can keep the thread between sessions.
+    </p>
+  </div>
+  <div class="progress-meter" aria-label="Workshop progress: 0 of 7 lessons complete" data-progress-meter>
+    <div class="progress-meter-label">
+      <span><strong data-progress-complete>0</strong> of 7 lessons complete</span>
+      <span class="mono" data-progress-percent>0%</span>
+    </div>
+    <div class="progress-track"><span data-progress-bar style="width: 0%"></span></div>
+  </div>
+  <div class="progress-summary-actions">
+    <p class="progress-note mono" data-progress-note>Progress is saved locally in this browser.</p>
+    <button class="button secondary progress-reset" type="button" data-reset-progress hidden>Reset progress</button>
+  </div>
+</aside>
+
+<script>
+  import { readProgress, resetProgress } from '../scripts/progress';
+
+  const summary = document.querySelector('[data-progress-summary]');
+  const resetButton = summary?.querySelector('[data-reset-progress]');
+
+  const renderProgress = () => {
+    const progress = readProgress();
+    const completed = new Set(progress.completedLessons);
+    const percent = Math.round((completed.size / 7) * 100);
+    summary?.querySelector('[data-progress-complete]')?.replaceChildren(String(completed.size));
+    summary?.querySelector('[data-progress-percent]')?.replaceChildren(`${percent}%`);
+    summary?.querySelector('[data-progress-bar]')?.setAttribute('style', `width: ${percent}%`);
+    summary?.querySelector('[data-progress-meter]')?.setAttribute(
+      'aria-label',
+      `Workshop progress: ${completed.size} of 7 lessons complete`,
+    );
+    if (resetButton instanceof HTMLButtonElement) {
+      resetButton.hidden = completed.size === 0
+        && Object.keys(progress.lessons).length === 0
+        && progress.primaryPhase === 'research';
+    }
+    summary?.querySelector('[data-progress-note]')?.replaceChildren(
+      completed.size ? 'Progress is saved locally in this browser.' : 'Start a lesson to begin saving progress.',
+    );
+  };
+
+  renderProgress();
+  resetButton?.addEventListener('click', () => {
+    resetProgress();
+    renderProgress();
+  });
+  window.addEventListener('storage', renderProgress);
+  window.addEventListener('agentic-workshop:progress', renderProgress);
+</script>

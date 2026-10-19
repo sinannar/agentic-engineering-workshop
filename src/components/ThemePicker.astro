@@ -1,0 +1,39 @@
+<div class="theme-picker" role="group" aria-label="Choose color theme" data-theme-picker>
+  <button type="button" data-theme="light" aria-label="Use light theme" aria-pressed="true">☼</button>
+  <button type="button" data-theme="dark" aria-label="Use dark theme" aria-pressed="false">◐</button>
+  <button type="button" data-theme="matrix" aria-label="Use Matrix theme" aria-pressed="false">⌁</button>
+</div>
+
+<script>
+  const storageKey = 'agentic-workshop-theme';
+  const picker = document.querySelector('[data-theme-picker]');
+  const themes = ['light', 'dark', 'matrix'];
+
+  const setTheme = (theme: string) => {
+    const selected = themes.includes(theme) ? theme : 'light';
+    document.documentElement.dataset.theme = selected;
+    picker?.querySelectorAll('button').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.theme === selected));
+    });
+  };
+
+  let savedTheme = 'light';
+  try {
+    savedTheme = localStorage.getItem(storageKey) || 'light';
+  } catch {
+    // Storage can be unavailable in privacy-restricted browsers.
+  }
+  setTheme(savedTheme);
+
+  picker?.querySelectorAll('button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const theme = button.dataset.theme || 'light';
+      setTheme(theme);
+      try {
+        localStorage.setItem(storageKey, theme);
+      } catch {
+        // Keep the current theme for this session when storage is unavailable.
+      }
+    });
+  });
+</script>
