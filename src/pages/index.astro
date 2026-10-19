@@ -199,16 +199,62 @@ const toolkit = [
       <h2 id="repositories-title">Three repositories. One learning journey.</h2>
     </div>
     <nav aria-label="Workshop repositories">
-      <a href={templateUrl}><strong>Template</strong><span>Start with Aspire</span><span aria-hidden="true">↗</span></a>
-      <a href={finalWorkshopUrl}><strong>Final workshop</strong><span>See the completed build</span><span aria-hidden="true">↗</span></a>
-      <a href={websiteRepoUrl}><strong>Astro / GitHub Pages</strong><span>Explore the Astro source for this site</span><span aria-hidden="true">↗</span></a>
+      <div class="repository-card template-card">
+        <a class="repository-link" href={templateUrl}><strong>Template</strong><span>Start with Aspire</span><span aria-hidden="true">↗</span></a>
+        <button class="qr-trigger" type="button" data-qr-src={`${base}/images/repository-template-qr.png`} data-qr-title="Aspire template repository" data-qr-alt="QR code for the Aspire template repository">Show QR code</button>
+      </div>
+      <div class="repository-card">
+        <a class="repository-link" href={finalWorkshopUrl}><strong>Final workshop</strong><span>See the completed build</span><span aria-hidden="true">↗</span></a>
+        <button class="qr-trigger" type="button" data-qr-src={`${base}/images/repository-final-workshop-qr.png`} data-qr-title="Completed workshop repository" data-qr-alt="QR code for the completed workshop repository">Show QR code</button>
+      </div>
+      <div class="repository-card">
+        <a class="repository-link" href={websiteRepoUrl}><strong>Astro / GitHub Pages</strong><span>Explore the Astro source for this site</span><span aria-hidden="true">↗</span></a>
+        <button class="qr-trigger" type="button" data-qr-src={`${base}/images/repository-website-qr.png`} data-qr-title="Workshop website repository" data-qr-alt="QR code for the workshop website repository">Show QR code</button>
+      </div>
     </nav>
   </section>
 
   <section class="container bottom-cta" aria-label="Start the workshop">
     <a class="button" href={`${base}/chapters/${setupLesson.id}/`}>Start workshop <span aria-hidden="true">↗</span></a>
   </section>
+
+  <dialog class="qr-dialog" data-qr-dialog aria-labelledby="qr-dialog-title">
+    <div class="qr-dialog-card">
+      <div class="qr-dialog-heading">
+        <div>
+          <p class="eyebrow">Scan to open</p>
+          <h2 id="qr-dialog-title" data-qr-dialog-title>Repository</h2>
+        </div>
+        <button class="qr-dialog-close" type="button" data-qr-close aria-label="Close QR code">×</button>
+      </div>
+      <img data-qr-dialog-image src="" alt="" />
+    </div>
+  </dialog>
 </SiteLayout>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-qr-dialog]');
+  const dialogTitle = document.querySelector<HTMLElement>('[data-qr-dialog-title]');
+  const dialogImage = document.querySelector<HTMLImageElement>('[data-qr-dialog-image]');
+  const closeButton = document.querySelector<HTMLButtonElement>('[data-qr-close]');
+
+  document.querySelectorAll<HTMLButtonElement>('[data-qr-src]').forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (!dialog || !dialogTitle || !dialogImage) return;
+      dialogTitle.textContent = trigger.dataset.qrTitle ?? 'Repository';
+      dialogImage.src = trigger.dataset.qrSrc ?? '';
+      dialogImage.alt = trigger.dataset.qrAlt ?? '';
+      dialog.showModal();
+    });
+  });
+
+  closeButton?.addEventListener('click', () => dialog?.close());
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+</script>
 
 <style>
   .hero {
@@ -388,29 +434,109 @@ const toolkit = [
     border-top: 1px solid var(--line);
   }
 
-  .repository-footer a {
+  .repository-card {
     display: grid;
     gap: 0.3rem;
     align-content: start;
     padding: 1rem 1rem 0 0;
     border-right: 1px solid var(--line);
+  }
+
+  .repository-card:not(:first-child) {
+    padding-left: 1rem;
+  }
+
+  .repository-card:last-child {
+    border-right: 0;
+  }
+
+  .repository-link {
+    display: grid;
+    gap: 0.3rem;
     color: var(--accent-strong);
     text-decoration: none;
   }
 
-  .repository-footer a:not(:first-child) {
-    padding-left: 1rem;
+  .qr-trigger {
+    justify-self: start;
+    margin-top: 0.7rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--accent-strong);
+    cursor: pointer;
+    font: 0.68rem var(--font-mono);
+    text-decoration: underline;
+    text-underline-offset: 0.2rem;
   }
 
-  .repository-footer a:last-child {
-    border-right: 0;
-  }
-
-  .repository-footer a:hover {
+  .qr-trigger:hover {
     color: var(--ink);
   }
 
-  .repository-footer a span:nth-child(2) {
+  .qr-dialog {
+    width: min(90vw, 34rem);
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--surface-raised);
+    color: var(--ink);
+    box-shadow: 0 2rem 6rem rgb(0 0 0 / 28%);
+  }
+
+  .qr-dialog::backdrop {
+    background: rgb(12 18 25 / 72%);
+    backdrop-filter: blur(0.25rem);
+  }
+
+  .qr-dialog-card {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .qr-dialog-heading {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .qr-dialog-heading h2 {
+    margin: 0.25rem 0 0;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+  }
+
+  .qr-dialog-close {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .qr-dialog-close:hover {
+    border-color: var(--accent);
+    color: var(--accent-strong);
+  }
+
+  .qr-dialog img {
+    width: min(100%, 25rem);
+    justify-self: center;
+    aspect-ratio: 1;
+    border-radius: 0.75rem;
+    background: #fff;
+  }
+
+  .repository-link:hover {
+    color: var(--ink);
+  }
+
+  .repository-link span:nth-child(2) {
     color: var(--ink-soft);
     font-size: 0.82rem;
   }
