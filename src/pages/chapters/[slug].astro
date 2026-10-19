@@ -109,25 +109,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     const code = pre.querySelector('code');
     if (!code) return;
 
+    const isTerminal = ['language-bash', 'language-shell', 'language-sh', 'language-powershell'].some((language) =>
+      code.classList.contains(language),
+    );
+    if (isTerminal) pre.classList.add('terminal-code');
+
     const copyButton = document.createElement('button');
-    copyButton.className = 'prompt-copy';
+    copyButton.className = isTerminal ? 'prompt-copy terminal-copy' : 'prompt-copy';
     copyButton.type = 'button';
-    copyButton.textContent = 'Copy prompt';
+    const copyLabel = isTerminal ? 'Copy command' : 'Copy prompt';
+    copyButton.textContent = copyLabel;
     copyButton.setAttribute('aria-live', 'polite');
-    copyButton.setAttribute('aria-label', 'Copy prompt to clipboard');
+    copyButton.setAttribute('aria-label', `${copyLabel} to clipboard`);
     copyButton.addEventListener('click', async () => {
-      const originalLabel = 'Copy prompt';
       try {
         await navigator.clipboard.writeText(code.textContent?.trim() ?? '');
         copyButton.textContent = 'Copied';
-        copyButton.setAttribute('aria-label', 'Prompt copied to clipboard');
+        copyButton.setAttribute('aria-label', `${copyLabel} copied to clipboard`);
       } catch {
         copyButton.textContent = 'Copy failed';
-        copyButton.setAttribute('aria-label', 'Copy failed; select the prompt text manually');
+        copyButton.setAttribute('aria-label', `Copy failed; select the ${isTerminal ? 'command' : 'prompt'} text manually`);
       }
       window.setTimeout(() => {
-        copyButton.textContent = originalLabel;
-        copyButton.setAttribute('aria-label', 'Copy prompt to clipboard');
+        copyButton.textContent = copyLabel;
+        copyButton.setAttribute('aria-label', `${copyLabel} to clipboard`);
       }, 2200);
     });
     pre.append(copyButton);

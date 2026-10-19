@@ -5,7 +5,7 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 const lessons = (await getCollection('lessons')).sort((a, b) => a.data.order - b.data.order);
 const setupLesson = lessons.find((lesson) => lesson.data.workflow === 'setup') ?? lessons[0];
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const finalWorkshopUrl = 'https://github.com/sinannar/agenticengineeringday2026-experiment';
+const finalWorkshopUrl = 'https://github.com/sinannar/agenticengineeringday2026-experiment/tree/devcontainer';
 const templateUrl = 'https://github.com/sinannar/agenticengineeringday2026-template';
 const websiteRepoUrl = 'https://github.com/sinannar/agenticengineeringday2026-workshop';
 
@@ -54,11 +54,11 @@ const toolkit = [
       <h1>From prompts to <span>practice.</span></h1>
       <p class="hero-lede">
         Learn how to collaborate with AI coding agents to research, plan, implement,
-        test, and review real software using structured engineering workflows and
+        test, and review real software using structured engineering practices and
         modern development tools.
       </p>
       <div class="hero-actions">
-        <a class="button" href={`${base}/chapters/${setupLesson.id}/`}>Get started <span aria-hidden="true">↗</span></a>
+        <a class="button" href={`${base}/chapters/${setupLesson.id}/`}>Start workshop <span aria-hidden="true">↗</span></a>
         <a class="button secondary" href="#workshop">Explore the workshop</a>
         <a class="button secondary" href={`${base}/references/`}>References</a>
       </div>
@@ -203,6 +203,10 @@ const toolkit = [
       <a href={finalWorkshopUrl}><strong>Final workshop</strong><span>See the completed build</span><span aria-hidden="true">↗</span></a>
       <a href={websiteRepoUrl}><strong>Astro / GitHub Pages</strong><span>Explore the Astro source for this site</span><span aria-hidden="true">↗</span></a>
     </nav>
+  </section>
+
+  <section class="container bottom-cta" aria-label="Start the workshop">
+    <a class="button" href={`${base}/chapters/${setupLesson.id}/`}>Start workshop <span aria-hidden="true">↗</span></a>
   </section>
 </SiteLayout>
 
@@ -361,6 +365,12 @@ const toolkit = [
     gap: 2rem;
     padding-block: 2rem 4rem;
     border-top: 1px solid var(--line);
+  }
+
+  .bottom-cta {
+    display: flex;
+    justify-content: center;
+    padding-block: 0 clamp(4rem, 8vw, 7rem);
   }
 
   .repository-footer h2 {
