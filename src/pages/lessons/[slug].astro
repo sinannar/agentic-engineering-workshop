@@ -23,6 +23,7 @@ const { lesson, previous, next } = Astro.props;
 const lessons = (await getCollection('lessons')).sort((a, b) => a.data.order - b.data.order);
 const { Content } = await render(lesson);
 const description = lesson.data.summary;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <SiteLayout title={`${lesson.data.title} — Agentic Engineering Workshop`} description={description}>
@@ -68,15 +69,19 @@ const description = lesson.data.summary;
         </div>
       )}
 
-      {lesson.data.workflow === 'rpi' && <section class="follow-up-cycle" data-follow-up-cycle hidden aria-labelledby="follow-up-title">
-        <div>
-          <p class="eyebrow">Keep the loop moving</p>
-          <h2 id="follow-up-title">Start another cycle.</h2>
-          <p>Try a fresh Research → Plan → Implement pass on the next bounded question. These follow-up cycles are intentionally temporary.</p>
-        </div>
-        <div class="follow-up-cycles" data-follow-up-cycles></div>
-        <button class="button" type="button" data-start-cycle>Start another cycle</button>
-      </section>}
+      {lesson.data.workflow === 'rpi' && (
+        <section class="next-step" data-follow-up-cycle hidden aria-live="polite">
+          <div>
+            <p class="eyebrow">Review complete</p>
+            <p class="next-step-message">Review triggered another cycle.</p>
+          </div>
+          {next ? (
+            <a class="button" href={`${base}/lessons/${next.id}/`}>Go to next chapter <span aria-hidden="true">↗</span></a>
+          ) : (
+            <span class="next-step-message">Workshop complete.</span>
+          )}
+        </section>
+      )}
 
       <LessonPager previous={previous} next={next} />
     </article>
@@ -97,8 +102,6 @@ const description = lesson.data.summary;
   const workflowControls = document.querySelector('[data-workflow-controls]');
   const status = document.querySelector('[data-workflow-status]');
   const followUp = document.querySelector('[data-follow-up-cycle]');
-  const cycleList = document.querySelector('[data-follow-up-cycles]');
-  const startCycleButton = document.querySelector('[data-start-cycle]');
   const markLessonButton = document.querySelector('[data-mark-lesson-complete]');
   const resetButton = document.querySelector('[data-workflow-controls] [data-reset-progress]');
 
@@ -222,39 +225,40 @@ const description = lesson.data.summary;
       render();
     });
 
-    const addCycle = () => {
-      if (!(cycleList instanceof HTMLElement)) return;
-      const cycleNumber = cycleList.children.length + 1;
-      const cycle = document.createElement('div');
-      cycle.className = 'follow-up-cycle-card';
-      cycle.innerHTML = `
-        <div class="follow-up-cycle-heading">
-          <strong>Cycle ${cycleNumber}</strong>
-          <span class="mono" data-cycle-status>Research next</span>
-        </div>
-        <ol>${['Research', 'Plan', 'Implement'].map((phase) => `
-          <li><button class="phase-complete" type="button" data-cycle-phase="${phase.toLowerCase()}" aria-pressed="false">Mark ${phase} complete</button></li>
-        `).join('')}</ol>
-      `;
-      cycleList.append(cycle);
-      const buttons = [...cycle.querySelectorAll<HTMLButtonElement>('[data-cycle-phase]')];
-      buttons.forEach((button, index) => {
-        button.addEventListener('click', () => {
-          button.setAttribute('aria-pressed', 'true');
-          button.textContent = 'Completed';
-          const next = buttons[index + 1];
-          const cycleStatus = cycle.querySelector('[data-cycle-status]');
-          if (next) {
-            cycleStatus?.replaceChildren(`${next.dataset.cyclePhase?.replace(/^./, (letter) => letter.toUpperCase())} next`);
-          } else {
-            cycleStatus?.replaceChildren('Cycle complete');
-            cycle.classList.add('is-complete');
-          }
-        });
-      });
-    };
-
-    startCycleButton?.addEventListener('click', addCycle);
     render();
   }
 </script>
+
+<style>
+  .next-step {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding: 1.25rem 1.4rem;
+    border: 1px solid var(--lime);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--lime) 14%, var(--surface));
+  }
+
+  .next-step .eyebrow {
+    margin-bottom: 0.35rem;
+  }
+
+  .next-step-message {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .next-step .button {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 620px) {
+    .next-step {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+</style>

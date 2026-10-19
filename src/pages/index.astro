@@ -1,62 +1,433 @@
 ---
 import { getCollection } from 'astro:content';
+import ProgressSummary from '../components/ProgressSummary.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 
 const lessons = (await getCollection('lessons')).sort((a, b) => a.data.order - b.data.order);
-const firstLesson = lessons[0];
+const setupLesson = lessons.find((lesson) => lesson.data.workflow === 'setup') ?? lessons[0];
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const finalWorkshopUrl = 'https://github.com/sinannar/agenticengineeringday2026-experiment';
+const templateUrl = 'https://github.com/sinannar/agenticengineeringday2026-template';
+
+const workflow = [
+  {
+    number: '01',
+    title: 'Research',
+    description: 'Understand the problem before changing code. Explore requirements, investigate the existing application, identify constraints, and gather evidence to guide implementation.',
+  },
+  {
+    number: '02',
+    title: 'Plan',
+    description: 'Turn research into an actionable engineering plan. Define the approach, break work into manageable tasks, identify dependencies, and establish acceptance criteria.',
+  },
+  {
+    number: '03',
+    title: 'Implement',
+    description: 'Collaborate with AI agents to execute the plan. Make focused changes, run the application, write tests, and validate the results.',
+  },
+  {
+    number: '04',
+    title: 'Review',
+    description: 'Evaluate the implementation before delivery. Inspect changes for correctness, maintainability, security, and alignment with the original requirements.',
+  },
+];
+
+const toolkit = [
+  ['GitHub Copilot CLI', 'Collaborate with coding agents directly from the terminal.'],
+  ['HVE Core', 'Apply structured research, planning, implementation, and review workflows.'],
+  ['Agent Skills', 'Extend agents with reusable engineering capabilities and instructions.'],
+  ['.NET 10', 'Build modern APIs, services, and background workers.'],
+  ['Aspire', 'Develop, orchestrate, and observe distributed applications.'],
+  ['Blazor', 'Build an interactive application experience.'],
+  ['GitHub CLI & gh-stack', 'Deliver dependent changes through stacked pull requests.'],
+  ['Dev Containers & Codespaces', 'Work in a reproducible development environment.'],
+];
 ---
 
 <SiteLayout
   title="Agentic Engineering Workshop"
-  description="Build SupportHub, a distributed customer support application, using Aspire, GitHub Copilot CLI, and HVE Core across seven feature steps."
+  description="Learn disciplined, agentic software engineering by building SupportHub with AI coding agents, .NET 10, Aspire, and Blazor."
 >
-  <article class="container workshop-intro">
-    <h1>Agentic Engineering Workshop</h1>
-    <p>
-      Build <strong>SupportHub</strong>, a distributed customer support and ticket
-      management application, using .NET 10, Aspire, GitHub Copilot CLI, HVE Core,
-      RPI workflows, and stacked pull requests.
-    </p>
-    <p>
-      Follow the setup guide, then work through seven feature steps covering
-      customers, tickets, attachments, activity, SLAs, dashboards, and UI/UX.
-      Each step uses a Research–Plan–Implement–Review cycle.
-    </p>
+  <section class="container hero">
+    <div>
+      <p class="eyebrow">Hands-on workshop / 2026</p>
+      <h1>From prompts to <span>practice.</span></h1>
+      <p class="hero-lede">
+        Learn how to collaborate with AI coding agents to research, plan, implement,
+        test, and review real software using structured engineering workflows and
+        modern development tools.
+      </p>
+      <div class="hero-actions">
+        <a class="button" href={`${base}/lessons/${setupLesson.id}/`}>Get started <span aria-hidden="true">↗</span></a>
+        <a class="button secondary" href="#workshop">Explore the workshop</a>
+        <a class="button secondary" href={`${base}/references/`}>References</a>
+      </div>
+      <div class="hero-stats" aria-label="Workshop overview">
+        <span><strong>7</strong> features</span>
+        <span><strong>4</strong> RPI phases</span>
+        <span><strong>1</strong> application</span>
+      </div>
+      <div class="repo-links" aria-label="Workshop repositories">
+        <a href={templateUrl}>Start from the Aspire template <span aria-hidden="true">↗</span></a>
+        <a href={finalWorkshopUrl}>See the final workshop <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
 
-    <section aria-label="Start the workshop">
-      <a class="button" href={`${base}/lessons/${firstLesson.id}/`}>
-        Start workshop
-      </a>
-    </section>
-  </article>
+    <div class="hero-art" aria-label="Research, plan, implement, review workflow illustration">
+      <span class="orbit-label orbit-label-top mono">development / lifecycle</span>
+      <span class="orbit-label orbit-label-bottom mono">ship with confidence</span>
+      <span class="signal one" aria-hidden="true"></span>
+      <span class="signal two" aria-hidden="true"></span>
+      <div class="terminal">
+        <div class="terminal-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="terminal-line"><strong>$</strong> copilot</div>
+        <div class="terminal-line">research the next feature</div>
+        <div class="terminal-line">→ evidence collected</div>
+        <div class="terminal-line">→ plan ready</div>
+        <div class="terminal-line">→ tests passing</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container intro-band" aria-labelledby="intro-title">
+    <div class="intro-copy">
+      <p class="eyebrow">Beyond vibe coding</p>
+      <h2 id="intro-title">Better software needs more than generated code.</h2>
+    </div>
+    <div class="prep-grid">
+      <p>
+        AI can generate code in seconds. Engineering reliable software requires more:
+        clear requirements, deliberate planning, incremental implementation, automated
+        validation, and thoughtful review.
+      </p>
+      <p>
+        In this workshop, AI agents become collaborators throughout the software delivery
+        lifecycle. The goal is not to generate more code. It is to deliver better software
+        with greater confidence.
+      </p>
+      <p class="mono">Research → Plan → Implement → Review</p>
+    </div>
+  </section>
+
+  <section id="workshop" class="container section" aria-labelledby="build-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">What you'll use</p>
+        <h2 id="build-title">Technology for modern distributed applications.</h2>
+      </div>
+      <p>SupportHub is the example application. The focus is learning how these technologies work together in a real system.</p>
+    </div>
+    <ul class="technology-list">
+      <li>
+        <span class="technology-bullet" aria-hidden="true">↗</span>
+        <div><strong>.NET 10</strong><span>Build two ASP.NET Core APIs and background services.</span></div>
+      </li>
+      <li>
+        <span class="technology-bullet" aria-hidden="true">↗</span>
+        <div><strong>Aspire</strong><span>Orchestrate, run, and observe the distributed application locally.</span></div>
+      </li>
+      <li>
+        <span class="technology-bullet" aria-hidden="true">↗</span>
+        <div><strong>Blazor</strong><span>Build the interactive frontend that connects the support workflows.</span></div>
+      </li>
+      <li>
+        <span class="technology-bullet" aria-hidden="true">↗</span>
+        <div><strong>PostgreSQL &amp; Redis</strong><span>Persist application data and add deliberate caching and resilience.</span></div>
+      </li>
+      <li>
+        <span class="technology-bullet" aria-hidden="true">↗</span>
+        <div><strong>Azure Storage</strong><span>Handle file attachments with Blob Storage and Azurite locally.</span></div>
+      </li>
+      <li>
+        <span class="technology-bullet" aria-hidden="true">↗</span>
+        <div><strong>Messaging &amp; workers</strong><span>Process background activity with Service Bus, Cosmos DB, and scheduled services.</span></div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="method-section" aria-labelledby="method-title">
+    <div class="container section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">The engineering workflow</p>
+          <h2 id="method-title">A repeatable process for every feature.</h2>
+        </div>
+        <p>Powered by HVE Core's Research–Plan–Implement–Review methodology.</p>
+      </div>
+      <div class="method-grid">
+        {workflow.map((step) => (
+          <article class="method-step">
+            <span class="method-index">{step.number}</span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="container section" aria-labelledby="toolkit-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">Your agentic engineering toolkit</p>
+        <h2 id="toolkit-title">Tools support the practice.</h2>
+      </div>
+      <p>The tools are important, but the engineering practices are the focus.</p>
+    </div>
+    <ul class="toolkit-list">
+      {toolkit.map(([title, description]) => (
+        <li>
+          <span class="toolkit-bullet" aria-hidden="true">↗</span>
+          <div>
+            <h3>{title}</h3>
+            <p>{description}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="container section learn-section" aria-labelledby="learn-title">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">What you'll learn</p>
+        <h2 id="learn-title">Engineer with agents, deliberately.</h2>
+      </div>
+    </div>
+    <ul class="learning-list">
+      <li>Apply the agentic development lifecycle to real engineering tasks.</li>
+      <li>Use GitHub Copilot CLI and HVE Core throughout the development lifecycle.</li>
+      <li>Research unfamiliar codebases and plan changes before implementation.</li>
+      <li>Build and run distributed .NET applications with Aspire.</li>
+      <li>Use agent instructions and skills to improve coding-agent effectiveness.</li>
+      <li>Implement and validate features incrementally.</li>
+      <li>Manage dependent changes using stacked pull requests.</li>
+      <li>Review AI-generated code with the same rigor as human-written code.</li>
+    </ul>
+  </section>
+
+  <section class="container section progress-section" aria-labelledby="ready-title">
+    <div class="ready-panel">
+      <div>
+        <p class="eyebrow">Ready to engineer with agents?</p>
+        <h2 id="ready-title">Start with one feature at a time.</h2>
+        <p>Research deliberately. Plan clearly. Implement incrementally. Review rigorously.</p>
+      </div>
+      <a class="button" href={`${base}/lessons/${setupLesson.id}/`}>Start the workshop <span aria-hidden="true">↗</span></a>
+    </div>
+    <ProgressSummary />
+  </section>
 </SiteLayout>
 
 <style>
-  .workshop-intro {
-    max-width: 760px;
-    padding-block: clamp(2.5rem, 7vw, 5rem);
+  .hero {
+    min-height: min(700px, calc(100vh - 5.25rem));
   }
 
-  h1 {
-    margin: 0 0 1.5rem;
-    font-size: clamp(2rem, 5vw, 3rem);
-    line-height: 1.15;
-    letter-spacing: -0.04em;
+  .text-link {
+    font-size: 0.92rem;
   }
 
-  p,
-  li {
+  .technology-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .technology-list li {
+    display: grid;
+    grid-template-columns: 1.7rem 1fr;
+    gap: 0.8rem;
+    align-items: start;
+    padding: 1.35rem 1.5rem 1.35rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .technology-bullet {
+    display: grid;
+    width: 1.55rem;
+    height: 1.55rem;
+    place-items: center;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    color: var(--accent);
+    font: 0.7rem var(--font-mono);
+  }
+
+  .technology-list div {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .technology-list strong {
+    font-size: 1.08rem;
+  }
+
+  .technology-list div span {
     color: var(--ink-soft);
-    font-size: 1.05rem;
+    font-size: 0.92rem;
   }
 
-  strong {
+  .repo-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+    margin-top: 1.6rem;
+    font: 0.72rem var(--font-mono);
+  }
+
+  .repo-links a,
+  .repository-list a {
+    color: var(--accent-strong);
+    text-decoration: none;
+  }
+
+  .repo-links a:hover,
+  .repository-list a:hover {
     color: var(--ink);
   }
 
-  section {
-    margin-top: 2rem;
+  .toolkit-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
   }
 
+  .toolkit-list li {
+    display: grid;
+    grid-template-columns: 1.7rem 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    padding: 1.25rem 1.5rem 1.25rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .toolkit-bullet {
+    display: grid;
+    width: 1.55rem;
+    height: 1.55rem;
+    place-items: center;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    color: var(--accent);
+    font: 0.7rem var(--font-mono);
+  }
+
+  .toolkit-list h3 {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .toolkit-list p {
+    margin: 0.25rem 0 0;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  .learning-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .learning-list li {
+    padding: 1.15rem 1rem 1.15rem 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-soft);
+  }
+
+  .learning-list li::before {
+    margin-right: 0.65rem;
+    color: var(--accent);
+    content: '↗';
+    font-family: var(--font-mono);
+  }
+
+  .text-link {
+    display: inline-flex;
+    gap: 0.45rem;
+    margin-top: 1.5rem;
+    color: var(--accent-strong);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .text-link:hover {
+    color: var(--ink);
+  }
+
+  .ready-panel {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--ink);
+    color: var(--canvas);
+  }
+
+  .ready-panel h2 {
+    max-width: 560px;
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -0.055em;
+    line-height: 1;
+  }
+
+  .ready-panel p:last-child {
+    margin-bottom: 0;
+    color: color-mix(in srgb, var(--canvas) 72%, transparent);
+  }
+
+  .ready-panel .eyebrow {
+    color: var(--lime);
+  }
+
+  .ready-panel .button {
+    flex-shrink: 0;
+    border-color: var(--lime);
+    background: var(--lime);
+    color: var(--ink);
+  }
+
+  .ready-panel .button:hover {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--canvas);
+  }
+
+  @media (max-width: 780px) {
+    .technology-list {
+      grid-template-columns: 1fr;
+    }
+
+    .toolkit-list {
+      grid-template-columns: 1fr;
+    }
+
+    .learning-list {
+      grid-template-columns: 1fr;
+    }
+
+    .ready-panel {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
 </style>

@@ -13,7 +13,7 @@ website repository or in the completed reference repository.
 
 ## Fork the template
 
-1. Open [agentic-engineering-template](https://github.com/sinannar/agentic-engineering-template/).
+1. Open [agenticengineeringday2026-template](https://github.com/sinannar/agenticengineeringday2026-template).
 2. Select **Fork** and create a copy under your GitHub account.
 3. Open your fork's **Code** menu and choose the **Codespaces** tab.
 
