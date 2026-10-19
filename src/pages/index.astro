@@ -1,99 +1,97 @@
 ---
 import { getCollection } from 'astro:content';
-import LessonCard from '../components/LessonCard.astro';
-import ProgressSummary from '../components/ProgressSummary.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 
 const lessons = (await getCollection('lessons')).sort((a, b) => a.data.order - b.data.order);
+const firstLesson = lessons[0];
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <SiteLayout
   title="Agentic Engineering Workshop"
-  description="A hands-on workshop for building reliable software with AI agents."
+  description="Build a .NET application with Aspire, GitHub Copilot CLI, and HVE Core across seven hands-on steps."
 >
-  <section class="container hero" aria-labelledby="hero-title">
-    <div>
-      <p class="eyebrow">Hands-on / Agentic engineering</p>
-      <h1 id="hero-title">Make AI a <span>teammate.</span></h1>
-      <p class="hero-lede">
-        A practical workshop for engineers who want to build, evaluate, and ship software with agents in the loop — without losing the plot.
-      </p>
-      <div class="hero-actions">
-        <a class="button" href="#lessons">Start the path <span aria-hidden="true">↗</span></a>
-        <a class="button secondary" href="#prepare">Check your setup</a>
-      </div>
-      <div class="hero-stats" aria-label="Workshop facts">
-        <span><strong>7</strong> feature slices</span>
-        <span><strong>4</strong> repeatable phases</span>
-        <span><strong>~6h</strong> hands-on practice</span>
-      </div>
-    </div>
-    <div class="hero-art" aria-label="Illustration of an agentic engineering terminal" role="img">
-      <span class="signal one" aria-hidden="true"></span>
-      <span class="signal two" aria-hidden="true"></span>
-      <div class="orbit-label orbit-label-top mono">RESEARCH / PLAN</div>
-      <div class="orbit-label orbit-label-bottom mono">IMPLEMENT / REVIEW</div>
-      <div class="terminal">
-        <div class="terminal-bar" aria-hidden="true"><i></i><i></i><i></i></div>
-        <div class="terminal-line"><strong>→</strong> workshop.init()</div>
-        <div class="terminal-line">context / constraints / intent... <strong>loaded</strong></div>
-        <div class="terminal-line">human + agent + system</div>
-        <div class="terminal-line"><strong>✓</strong> ready to build</div>
-      </div>
-    </div>
-  </section>
+  <article class="container workshop-intro">
+    <h1>Agentic Engineering Workshop</h1>
+    <p>
+      This hands-on workshop uses .NET Aspire, GitHub Copilot CLI, and HVE Core
+      to build an application across seven steps: customers, tickets, attachments,
+      activity, SLA, dashboard, and UI/UX.
+    </p>
+    <p>
+      In each step, you run four prompts for <strong>Research, Plan, Implement,
+      and Review</strong>, using HVE Core skills in Copilot CLI. Review may lead
+      to another Research–Plan–Implement cycle before you move on. Between steps,
+      you use stacked pull requests to keep the changes reviewable.
+    </p>
 
-  <section class="container intro-band" id="prepare" aria-labelledby="prepare-title">
-    <div class="intro-copy">
-      <p class="eyebrow">Before you begin</p>
-      <h2 id="prepare-title">Bring a real feature. Leave with a better way to build it.</h2>
-    </div>
-    <div class="prep-grid">
-      <div class="prep-item">
-        <span class="prep-icon" aria-hidden="true">01</span>
-        <div><h3>Purpose</h3><p>Practice a dependable loop for turning ambiguous product work into small, reviewable changes.</p></div>
-      </div>
-      <div class="prep-item">
-        <span class="prep-icon" aria-hidden="true">02</span>
-        <div><h3>Prerequisites</h3><p>Comfort with Git, a running .NET project, and curiosity about where an agent helps — or should not.</p></div>
-      </div>
-      <div class="prep-item">
-        <span class="prep-icon" aria-hidden="true">03</span>
-        <div><h3>Tools</h3><p>.NET Aspire, GitHub Copilot CLI, Aspire Skills, and the HVE Core workflow used throughout this site.</p></div>
-      </div>
-    </div>
-  </section>
+    <section id="references" aria-labelledby="references-title">
+      <h2 id="references-title">References</h2>
+      <ul>
+        <li>
+          <a href="https://aspire.dev/">Aspire</a>
+          — tools for running and observing the application and its services.
+        </li>
+        <li>
+          <a href="https://github.com/microsoft/hve-core">Hypervelocity Engineering (HVE Core)</a>
+          — the skills and prompts used for the workshop workflow.
+        </li>
+        <li>
+          <a href="https://github.com/github/copilot-cli">GitHub Copilot CLI</a>
+          — the terminal-based coding agent used to run the prompts.
+        </li>
+      </ul>
+    </section>
 
-  <section class="container section method-section" id="method" aria-labelledby="method-title">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">The HVE Core method</p>
-        <h2 id="method-title">A loop for useful progress, not magic.</h2>
-      </div>
-      <p>Every lesson follows the same four-phase rhythm: understand the system, make a bounded plan, implement with intent, and challenge the result.</p>
-    </div>
-    <div class="method-grid">
-      <article class="method-step"><span class="method-index">01</span><div><h3>Research</h3><p>Gather evidence from the codebase, constraints, and user need before making a change.</p></div></article>
-      <article class="method-step"><span class="method-index">02</span><div><h3>Plan</h3><p>Turn evidence into a small slice with explicit acceptance criteria and test seams.</p></div></article>
-      <article class="method-step"><span class="method-index">03</span><div><h3>Implement</h3><p>Use the agent as a fast pair while keeping decisions, boundaries, and ownership visible.</p></div></article>
-      <article class="method-step"><span class="method-index">04</span><div><h3>Review</h3><p>Close the loop with tests and critical review so the next iteration starts stronger.</p></div></article>
-    </div>
-  </section>
-
-  <section class="container section lessons-section" id="lessons" aria-labelledby="lessons-title">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">The workshop path</p>
-        <h2 id="lessons-title">Seven slices. One dependable practice.</h2>
-      </div>
-      <p>Move in order from domain foundations to a cohesive, evidence-backed experience. Each card is sourced from the lesson content contract.</p>
-    </div>
-    <div class="lesson-grid">
-      {lessons.map((lesson) => <LessonCard slug={lesson.id} {...lesson.data} />)}
-    </div>
-  </section>
-
-  <section class="container section progress-section" aria-label="Workshop progress">
-    <ProgressSummary />
-  </section>
+    <section id="lessons" aria-label="Start the workshop">
+      <a class="button" href={`${base}/lessons/${firstLesson.id}/`}>
+        Start workshop
+      </a>
+    </section>
+  </article>
 </SiteLayout>
+
+<style>
+  .workshop-intro {
+    max-width: 760px;
+    padding-block: clamp(2.5rem, 7vw, 5rem);
+  }
+
+  h1 {
+    margin: 0 0 1.5rem;
+    font-size: clamp(2rem, 5vw, 3rem);
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+  }
+
+  p,
+  li {
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+  }
+
+  strong {
+    color: var(--ink);
+  }
+
+  section {
+    margin-top: 2rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  ul {
+    padding-left: 1.25rem;
+  }
+
+  li + li {
+    margin-top: 0.85rem;
+  }
+
+  li a {
+    color: var(--accent-strong);
+    text-underline-offset: 0.2em;
+  }
+</style>

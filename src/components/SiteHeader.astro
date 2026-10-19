@@ -1,7 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
 import ThemePicker from './ThemePicker.astro';
 
 const base = import.meta.env.BASE_URL;
+const firstLesson = (await getCollection('lessons')).sort((a, b) => a.data.order - b.data.order)[0];
+const startUrl = `${base.replace(/\/$/, '')}/lessons/${firstLesson.id}/`;
 ---
 
 <header class="site-header">
@@ -14,9 +17,8 @@ const base = import.meta.env.BASE_URL;
       </span>
     </a>
     <nav class="nav-links" aria-label="Primary navigation">
-      <a href={`${base}#lessons`}>Lessons</a>
-      <a href={`${base}#method`}>Method</a>
-      <a href={`${base}#prepare`}>Prepare</a>
+      <a href={`${base}#references`}>References</a>
+      <a href={startUrl}>Start workshop</a>
       <ThemePicker />
     </nav>
   </div>

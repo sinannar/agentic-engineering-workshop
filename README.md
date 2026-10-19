@@ -21,21 +21,28 @@ and on manual dispatch. It installs with `npm ci`, runs the checks, builds the
 static Astro site, uploads `dist/` as a Pages artifact, and deploys it with
 the GitHub Pages deployment action.
 
-Astro generates routes and assets from the domain root, with no repository-path
-prefix:
+Local development and builds use `/` by default. During deployment,
+`actions/configure-pages` supplies the Pages origin and base path through
+`ASTRO_SITE_URL` and `ASTRO_BASE_PATH`. Astro uses those values to generate
+correct asset URLs, navigation links, and canonical URLs without hardcoding
+the repository path in the source routes.
 
-- Site: `https://sinannar.github.io`
-- Base path: `/` (Astro default)
-
-Deploy this build at the domain root. GitHub Pages does not automatically rewrite
-root-relative links for project sites served under a repository-name path.
+For this repository, GitHub Pages serves the site at
+`https://sinannar.github.io/agentic-engineering-workshop/`. Its CSS, JavaScript,
+and lesson links must include that base path; GitHub does not rewrite
+root-relative URLs automatically. The workflow also handles a root site or
+custom domain using the metadata supplied by Pages.
 
 Before the first deployment, open **Settings → Pages** in the GitHub
 repository. Under **Build and deployment**, set **Source** to **GitHub Actions**.
 The workflow's `github-pages` environment and Pages permissions are then
-created/used automatically by GitHub. If the repository is transferred or
-renamed or uses a custom domain, update `site` in `astro.config.mjs` to match the
-deployment origin.
+created/used automatically by GitHub.
+
+To reproduce the project-site build locally:
+
+```bash
+ASTRO_SITE_URL=https://sinannar.github.io ASTRO_BASE_PATH=/agentic-engineering-workshop npm run build
+```
 
 ## Lesson authoring contract
 

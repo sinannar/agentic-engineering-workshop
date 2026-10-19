@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      pages: read
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -31,11 +32,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Read GitHub Pages configuration
+        id: pages
+        uses: actions/configure-pages@v5
+
       - name: Check application
         run: npm run check
 
       - name: Build Astro site
         run: npm run build
+        env:
+          ASTRO_SITE_URL: ${{ steps.pages.outputs.origin }}
+          ASTRO_BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
